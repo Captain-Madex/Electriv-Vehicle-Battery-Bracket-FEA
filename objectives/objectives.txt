@@ -1,0 +1,129 @@
+PROJECT OBJECTIVES
+=================================================================
+Static structural analysis of an end plate + L-bracket (with gusset)
++ clamp plate supporting a battery block (EV battery bracket FEM)
+=================================================================
+
+
+1. MAIN OBJECTIVE
+-----------------
+Determine the structural response of the end plate + L-bracket/gusset
++ clamp plate assembly under the 294.3 N per-bracket load (F = mg/2,
+m = 60 kg block shared by two brackets, g = 9.81 m/s^2), and check
+whether the design is safe against yield.
+
+
+2. STRUCTURAL ANALYSIS OBJECTIVES
+---------------------------------
+Using a 2D linear-elastic static model (plane thickness t = 80 mm,
+bonded parts, fixed end-plate left face and flange bottom):
+
+  1. Total deformation
+     - Find the maximum total deformation and where it occurs.
+  2. Equivalent (von Mises) stress
+     - Find the maximum value and its location.
+  3. Principal stresses
+     - Find the maximum and minimum principal stress.
+  4. Stress components
+     - Obtain normal stress X, normal stress Y and shear stress XY.
+  5. Directional deformation
+     - Obtain the X and Y displacement fields.
+  6. Equivalent elastic strain
+     - Obtain the field and its maximum.
+  7. Support reactions
+     - Find the force and moment at the two fixed edges.
+     - Check equilibrium: the vertical reaction should balance 294.3 N.
+  8. Stress concentration
+     - Assess the web / gusset / flange junction.
+  9. Factor of safety
+     - Calculate the factor of safety against yield (the material
+       yield strength must be confirmed first).
+
+
+3. COMPUTATIONAL / SOLVER OBJECTIVES
+------------------------------------
+  1. Develop an independent Python FEM solver (four-node Q4 plane-stress
+     elements) that reads the ANSYS 18.2 CDB mesh and solves K u = F.
+  2. Apply the consistent edge load (5.886 N/mm over the 50 mm loaded
+     edge), the fixed supports and the bonded-interface constraints.
+  3. Recover element strains and stresses and produce contour plots for
+     all ten result quantities (total / X / Y deformation, von Mises,
+     sigma_x, sigma_y, tau_xy, equivalent strain, max and min principal
+     stress).
+  4. Run a mesh-convergence study over the five meshes (2.00, 1.50,
+     1.00, 0.50 and 0.25 mm) and judge whether the peak results become
+     mesh-independent.
+  5. Validate the Python solver against ANSYS results for every mesh,
+     using signed difference, absolute error and relative error.
+
+
+4. VALIDATION OBJECTIVES (OPEN ISSUES TO RESOLVE)
+-------------------------------------------------
+  1. Find the cause of the consistent factor of about 1.98 between the
+     Q4 and ANSYS maximum total deformation. Do not correct it by simply
+     dividing the Q4 result by two.
+  2. Check that both models use identical load, supports, materials,
+     section thickness, geometry and interface coordinates.
+  3. Compare nodal Ux and Uy at identical physical coordinates, not only
+     the global maxima.
+  4. Compare stress at matched integration points and on the same side
+     of each bonded interface, and explain the differences in sigma_x,
+     tau_xy and maximum principal stress.
+  5. Confirm the coordinate-system mapping of the ANSYS labels
+     ("Normal Stress 2", "Directional Deformation 2") to global X and Y.
+  6. Check that the excluded degenerate (collapsed) shell elements are
+     not near critical regions.
+
+
+5. MODEL ITEMS TO CONFIRM
+-------------------------
+  a) Contact length: 40 mm in the drawings vs the 50 mm clamp length
+     loaded in the 2D model.
+  b) Load arm and flange: d = 90 mm and 120 mm flange (M = 26.5 N.m) in
+     the free body vs d = 80 mm and 110 mm flange (M = 23.5 N.m) in the
+     2D model.
+  c) End plate height: 340 mm in the side view vs 140 mm in the 2D
+     model (the 2D model is a local section).
+  d) Bracket width: whether one 80 mm bracket per end carries the full
+     294.3 N, given the 300 mm block depth.
+  e) Gusset slope start (about 45 mm below the web top) is estimated
+     from photos, not measured.
+  f) Flange-bottom fixed support: the load goes almost directly into
+     the support, so the moment M is barely transferred to the end
+     plate. Confirm this is the intended boundary condition.
+  g) Material: not specified on the drawings. Confirm the properties and
+     yield strength (steel E = 200 GPa, nu = 0.3; aluminium E = 70 GPa,
+     nu = 0.33 for the bracket in the current CDB mapping).
+  h) Thickness: confirm one consistent value (the solver summaries use
+     80 mm; the literature-review file lists 2 mm).
+
+
+6. ASSUMPTIONS
+--------------
+  - Linear elastic material, small deformations, static loading.
+  - Self-weight of the plate, bracket and clamp is neglected.
+  - Parts are bonded (no separation or sliding).
+  - The load is a uniform pressure on the clamp plate top face.
+  - The load is shared equally by the two ends (symmetry).
+  - The Q4 solver is a membrane-only idealisation of SHELL181 (no
+    rotations, bending or transverse shear), so results are estimates
+    and not a full reproduction of ANSYS shell results.
+
+
+7. DELIVERABLES
+---------------
+  - Numerical result files (summary, nodal displacements, element
+    results) for each mesh.
+  - Contour figures for all ten result quantities, plus mesh/support/
+    load and deformed-shape figures.
+  - ANSYS vs Q4 comparison table and explanation report.
+  - Mesh-convergence discussion and a statement of validation status.
+
+
+8. FUTURE OBJECTIVES
+--------------------
+  - Identify regions where material can be reduced (lightweight design
+    or topology optimisation) while keeping the factor of safety.
+  - Extend the analysis to modal / vibration behaviour.
+  - Extend the 2D section to a 3D model that represents bracket width.
+  - Prepare the results and validated workflow for a journal paper.

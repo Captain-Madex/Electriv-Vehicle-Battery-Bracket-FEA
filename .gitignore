@@ -1,0 +1,28 @@
+# ANSYS generated solver files
+*.rst
+*.err
+*.out
+*.lock
+*.full
+*.emat
+*.esav
+*.osav
+*.mntr
+*.rdb
+
+# ANSYS temporary files
+*.bak
+*.tmp
+
+# Python generated files
+__pycache__/
+*.py[cod]
+.venv/
+venv/
+
+# Jupyter temporary files
+.ipynb_checkpoints/
+
+# Operating system files
+.DS_Store
+Thumbs.db

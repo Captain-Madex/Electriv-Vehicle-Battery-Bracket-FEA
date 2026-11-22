@@ -1,0 +1,11 @@
+ANSYS_result_parameter,minimum,maximum,maximum_absolute,unit
+Total Deformation / Overall displacement,0.0,9.654166969505409e-06,9.654166969505409e-06,mm
+Directional Deformation X / Horizontal displacement,-1.4810753693688337e-06,2.399694505527279e-06,2.399694505527279e-06,mm
+Directional Deformation Y / Vertical displacement,-9.64730876780099e-06,5.782872712355179e-08,9.64730876780099e-06,mm
+Equivalent Stress / von Mises stress,0.0,0.12125563092442126,0.12125563092442126,MPa
+Normal Stress X / Longitudinal stress,-0.024363033779601403,0.0,0.024363033779601403,MPa
+Normal Stress Y / Vertical stress,-0.0965678714351331,0.00016968592748250008,0.0965678714351331,MPa
+Shear Stress XY,-0.02321033914139262,0.02043749119930687,0.02321033914139262,MPa
+Equivalent Elastic Strain,0.0,8.355063592343136e-07,8.355063592343136e-07,-
+Maximum Principal Stress / tensile stress,-0.023490823991206364,0.001864608940078144,0.023490823991206364,MPa
+Minimum Principal Stress / compressive stress,-0.10179712098434052,0.0,0.10179712098434052,MPa

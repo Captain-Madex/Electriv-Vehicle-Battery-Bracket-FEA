@@ -1,0 +1,71 @@
+EV BATTERY BRACKET FEM
+UPDATED ANSYS-ONLY MESH CONVERGENCE ANALYSIS
+================================================
+
+1. PURPOSE AND SCOPE
+----------------------
+This update adds the newly supplied 0.2 mm ANSYS result summary to the five earlier mesh cases. The six nominal element sizes are 2.0, 1.5, 1.0, 0.5, 0.25 and 0.2 mm.
+This is an ANSYS-only trend analysis; it does not compare the custom Python FEM solver. Values for the first five meshes are retained from the earlier supplied result summaries. The sixth set is transcribed from the supplied 'results for 0.2mm mesh.pdf' (page 1).
+The source PDFs provide reported minima and maxima, but not node/element counts, peak coordinates, mesh-quality metrics or complete model settings. Identical geometry, loading, supports, material, section and extraction conventions cannot be independently verified from these summaries.
+
+2. NEW 0.2 mm RESULT SUMMARY
+-------------------------------
+Equivalent stress: minimum 2.3872E-017 MPa; maximum 0.27775 MPa.
+Shear stress: minimum -0.098444 MPa; maximum 0.093632 MPa.
+Maximum principal stress: minimum 0 MPa; maximum 0.053296 MPa.
+Normal Stress 2: minimum -0.23569 MPa; maximum 0.13429 MPa.
+Normal Stress: minimum -0.041822 MPa; maximum 0.0078028 MPa.
+Total deformation: minimum 0 mm; maximum 4.8583E-06 mm.
+Equivalent elastic strain: minimum 1.1936E-022 mm/mm; maximum 1.3887E-06 mm/mm.
+Directional Deformation: minimum -8.4467E-07 mm; maximum 9.6066E-07 mm.
+Directional Deformation 2: minimum -4.8583E-06 mm; maximum 8.8891E-09 mm.
+Minimum principal stress: minimum -0.27478 MPa; maximum 0 MPa.
+
+3. PRIMARY MAXIMUM RESULTS
+----------------------------
+Mesh size | Maximum total deformation (mm) | Maximum equivalent stress (MPa) | Maximum equivalent strain (mm/mm)
+---------------------------------------------------------------------------------------------------------
+   2 mm | 4.8777000E-06 | 0.152110 | 7.6053000E-07
+ 1.5 mm | 4.8682000E-06 | 0.159330 | 7.9667000E-07
+   1 mm | 4.8655000E-06 | 0.172960 | 8.6481000E-07
+ 0.5 mm | 4.8623000E-06 | 0.214030 | 1.0702000E-06
+0.25 mm | 4.8591000E-06 | 0.261340 | 1.3067000E-06
+ 0.2 mm | 4.8583000E-06 | 0.277750 | 1.3887000E-06
+
+4. CHANGE FROM 0.25 mm TO 0.2 mm
+-------------------------------------
+Total Deformation: 4.8591e-06 -> 4.8583e-06 mm; change = -0.016%.
+Equivalent Stress: 0.26134 -> 0.27775 MPa; change = +6.279%.
+Equivalent Elastic Strain: 1.3067e-06 -> 1.3887e-06 mm/mm; change = +6.275%.
+
+5. INTERPRETATION
+------------------
+Maximum total deformation decreases from 4.8591E-06 mm at 0.25 mm to 4.8583E-06 mm at 0.2 mm (approximately -0.016%). Across the full 2.0-to-0.2 mm range it changes by approximately -0.398%. This is a strong plateau for the reported global maximum deformation.
+Maximum equivalent stress increases from 0.26134 MPa to 0.27775 MPa between 0.25 and 0.2 mm (+6.28%). From 2.0 to 0.2 mm it increases by approximately 82.6%. No plateau is demonstrated; the reported peak equivalent stress remains mesh-sensitive.
+Maximum equivalent elastic strain increases from 1.3067E-06 to 1.3887E-06 mm/mm between 0.25 and 0.2 mm (+6.28%). It also continues increasing throughout refinement and is not demonstrated to be converged.
+Maximum principal tensile stress increases from 0.047877 MPa to 0.053296 MPa (+11.32%) between the final two meshes. Minimum principal compressive stress magnitude increases from 0.26042 MPa to 0.27478 MPa (+5.51%). These extrema are not at a demonstrated plateau.
+Peak absolute shear stress changes from 0.09283 MPa to 0.098444 MPa (+6.05%). The shear-stress peak remains mesh-sensitive.
+Normal Stress minimum magnitude changes from 0.039903 MPa to 0.041822 MPa (+4.81%). Its positive maximum changes from 0.0073851 MPa to 0.0078028 MPa (+5.65%). Neither extreme can yet be called converged based on this pair alone.
+Normal Stress 2 minimum magnitude changes from 0.2228 MPa to 0.23569 MPa (+5.79%). Its maximum changes from 0.0299 MPa to 0.13429 MPa (+349.1%). This large jump requires checking the contour, peak location, coordinate/result definition and source extraction before interpreting it physically.
+Directional deformation extrema remain comparatively stable. Directional Deformation 2 minimum changes by approximately -0.015% in magnitude between the final two meshes.
+
+6. OVERALL ASSESSMENT
+-----------------------
+Nearly converged / plateau: maximum total deformation; directional displacement trends are generally stable.
+Not demonstrated converged: maximum equivalent stress, equivalent elastic strain, shear stress extrema, principal stress extrema, Normal Stress extrema, and Normal Stress 2 extrema.
+Important data-quality flag: the 0.2 mm Normal Stress 2 maximum (0.13429 MPa) is a large jump relative to the 0.25 mm value (0.0299 MPa). Verify the ANSYS result item, coordinate system, component, and extrema extraction. Do not silently smooth or discard this value.
+
+7. RECOMMENDED NEXT STEPS
+---------------------------
+1. Identify maximum stress locations and coordinates for every mesh.
+2. Compare stress at the same physical coordinates or along the same physical path, not only global maxima.
+3. Inspect supports, load application edges, sharp corners, re-entrant features and local element quality.
+4. Confirm all six runs use identical geometry, material, thickness/section, loads, constraints, coordinate systems and stress averaging settings.
+5. Specifically re-check the 0.2 mm Normal Stress 2 maximum of 0.13429 MPa against its ANSYS contour and result details.
+6. Do not claim a formal stress GCI or Richardson extrapolation until an asymptotic convergence regime and consistent refinement sequence are established.
+
+8. REPORT-READY CONCLUSION
+----------------------------
+The six-mesh ANSYS refinement study (2.0 to 0.2 mm) indicates that the maximum total deformation is effectively stable: it decreases from 4.8777E-06 mm to 4.8583E-06 mm, an overall change of approximately -0.398%, with only about -0.016% change between the final two meshes. In contrast, maximum equivalent stress increases from 0.15211 MPa to 0.27775 MPa, while maximum equivalent elastic strain increases from 7.6053E-07 to 1.3887E-06 mm/mm. The final refinement from 0.25 to 0.2 mm still changes maximum equivalent stress and strain by approximately +6.28%. Peak shear and principal stresses also continue to increase. Therefore, the global displacement response shows a strong plateau, but local stress and strain extrema have not demonstrated mesh convergence. The unusually large 0.2 mm Normal Stress 2 maximum should be checked directly in ANSYS before being used for engineering conclusions. Peak coordinates and consistent path-based comparisons are recommended for the next stage.
+
+NOTE: Percentage changes describe changes between reported mesh results; they are not errors relative to an exact solution or another solver.

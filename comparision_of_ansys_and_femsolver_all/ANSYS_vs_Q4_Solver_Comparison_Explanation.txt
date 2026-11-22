@@ -1,0 +1,302 @@
+ANSYS RESULT SUMMARY vs CUSTOM Q4 FEM SOLVER
+EV BATTERY BRACKET - FIVE-MESH COMPARISON
+============================================================
+
+1. SCOPE AND SOURCES
+--------------------
+This comparison pairs the five ANSYS result-summary PDFs with the five
+custom Q4 solver JSON summaries by nominal mesh size:
+
+  2.00 mm -> ANSYS PDF "results for 2mm mesh"      vs Mesh 1 JSON
+  1.50 mm -> ANSYS PDF "results for 1.5mm mesh"    vs Mesh 2 JSON
+  1.00 mm -> ANSYS PDF "results for 1mm mesh"      vs Mesh 3 JSON
+  0.50 mm -> ANSYS PDF "results for 0.5mm mesh"    vs Mesh 4 JSON
+  0.25 mm -> ANSYS PDF "results for 0.25mm mesh"   vs Mesh 5 JSON
+
+The ANSYS source PDFs are one-page "Solution Quantities and Result Summary"
+screenshots dated 11/6/2026. They report minimum/maximum result values.
+The custom solver data are the uploaded JSON mesh summaries.
+
+The ANSYS PDFs do not show all model setup information (applied force,
+material definitions, exact supports, section thickness, mesh element
+counts, coordinate-system definitions, and result averaging settings).
+Therefore, the pairing is by filename and mesh size. The comparison is
+numerical, but equivalence of all model settings must still be confirmed.
+
+2. KEY DEFINITIONS USED FOR THE ERROR CALCULATION
+-------------------------------------------------
+For every compared minimum or maximum:
+
+  Signed difference = Q4 solver value - ANSYS value
+  Absolute error    = |Q4 solver value - ANSYS value|
+  Relative error %  = Absolute error / |ANSYS value| x 100
+
+A signed relative difference is also included in the CSV:
+  (Q4 solver value - ANSYS value) / |ANSYS value| x 100
+
+A positive signed difference means the Q4 solver result is numerically higher.
+A negative signed difference means it is numerically lower.
+
+For minimum stress values that are negative, the absolute ANSYS reference
+value is used in the percentage denominator. This avoids a confusing sign
+change in the percentage. Percentage errors are left blank when the ANSYS
+reference is effectively zero because percentage error around zero is not
+meaningful.
+
+For component peak-magnitude discussion, peak magnitude is defined as:
+  max(|minimum value|, |maximum value|)
+
+3. HEADLINE COMPARISON BY MESH
+------------------------------
+The deformation and von Mises columns below compare the reported maxima.
+The strain column compares maximum equivalent elastic strain.
+
+Mesh 1   2.00 mm | ANSYS def 4.877700e-06 | Q4 def 9.654167e-06 | def err  +97.92% | ANSYS VM 0.15211 | Q4 VM 0.12126 | VM err  -20.28% | strain err   +9.86%
+Mesh 2   1.50 mm | ANSYS def 4.868200e-06 | Q4 def 9.652909e-06 | def err  +98.28% | ANSYS VM 0.15933 | Q4 VM 0.14602 | VM err   -8.35% | strain err   +4.89%
+Mesh 3   1.00 mm | ANSYS def 4.865500e-06 | Q4 def 9.643344e-06 | def err  +98.20% | ANSYS VM 0.17296 | Q4 VM 0.15198 | VM err  -12.13% | strain err   +9.56%
+Mesh 4   0.50 mm | ANSYS def 4.862300e-06 | Q4 def 9.639296e-06 | def err  +98.25% | ANSYS VM 0.21403 | Q4 VM 0.20480 | VM err   -4.31% | strain err  +27.15%
+Mesh 5   0.25 mm | ANSYS def 4.859100e-06 | Q4 def 9.640480e-06 | def err  +98.40% | ANSYS VM 0.26134 | Q4 VM 0.27908 | VM err   +6.79% | strain err  +49.76%
+
+4. MAIN FINDINGS
+----------------
+
+4.1 Total deformation: large, consistent disagreement
+-----------------------------------------------------
+ANSYS maximum total deformation is approximately 4.86-4.88E-06 mm for all
+five meshes. The custom Q4 solver reports approximately 9.64-9.65E-06 mm.
+
+Q4 relative to ANSYS:
+  Mesh 1 (2.00 mm): 97.92% higher
+  Mesh 2 (1.50 mm): 98.28% higher
+  Mesh 3 (1.00 mm): 98.20% higher
+  Mesh 4 (0.50 mm): 98.25% higher
+  Mesh 5 (0.25 mm): 98.40% higher
+
+The Q4/ANSYS deformation ratio is approximately
+1.982 across the five meshes. This is a very consistent
+factor close to 1.98, not a random mesh-to-mesh fluctuation.
+
+Interpretation:
+  - Both codes show an almost flat maximum-deformation curve with refinement.
+  - The absolute displacement level does not agree.
+  - A stable factor-of-about-two difference usually points to a systematic
+    modelling, scaling, boundary-condition, load, thickness, or postprocessing
+    difference rather than ordinary mesh discretization alone.
+  - It must not be corrected by simply dividing the Q4 result by two. The
+    cause should be identified first.
+
+The directional results also differ. The assumed X-direction peak absolute
+displacement is substantially larger in the Q4 result, while the Y-direction
+peak absolute displacement is almost twice ANSYS. The PDFs label the fields
+"Directional Deformation" and "Directional Deformation 2"; mapping these to
+global X and Y is an assumption and should be checked in the ANSYS coordinate
+system.
+
+4.2 Maximum von Mises stress: relatively close, but mesh trend differs
+-----------------------------------------------------------------------
+ANSYS maximum equivalent stress:
+  0.15211, 0.15933, 0.17296, 0.21403, 0.26134 MPa
+
+Q4 maximum von Mises stress:
+  0.12126, 0.14602, 0.15198, 0.20480, 0.27908 MPa
+
+Q4 relative to ANSYS:
+  Mesh 1 (2.00 mm): -20.28% (Q4 lower)
+  Mesh 2 (1.50 mm): -8.35% (Q4 lower)
+  Mesh 3 (1.00 mm): -12.13% (Q4 lower)
+  Mesh 4 (0.50 mm): -4.31% (Q4 lower)
+  Mesh 5 (0.25 mm): +6.79% (Q4 higher)
+
+The closest maximum von Mises agreement is at Mesh 4 (0.50 mm), with an
+absolute relative difference of 4.31%. At Mesh 5 the Q4 result
+is +6.79% higher than ANSYS. The difference is not monotonic:
+Q4 is below ANSYS for the first four meshes, then above it at the finest.
+
+Both methods show peak von Mises stress rising with refinement. This is
+consistent with local stress concentrations becoming more resolved. However,
+the peak-stress values are not yet mesh-independent in either dataset.
+
+4.3 Equivalent elastic strain: disagreement grows at fine meshes
+----------------------------------------------------------------
+Q4 maximum equivalent elastic strain relative to ANSYS:
+  Mesh 1 (2.00 mm): +9.86% higher
+  Mesh 2 (1.50 mm): +4.89% higher
+  Mesh 3 (1.00 mm): +9.56% higher
+  Mesh 4 (0.50 mm): +27.15% higher
+  Mesh 5 (0.25 mm): +49.76% higher
+
+The Q4 equivalent strain is higher at every mesh. The difference increases
+substantially at the two finest meshes, reaching 49.76% at
+0.25 mm. This is a significant mismatch and should be investigated alongside
+the stress and displacement postprocessing.
+
+4.4 Stress component pattern
+----------------------------
+The following percentages compare the maximum absolute magnitude of each
+component over the reported min/max range. A negative percentage means the
+Q4 peak magnitude is below ANSYS; a positive percentage means it is above.
+
+Peak |sigma_x|: 2 mm -29.3%, 1.5 mm -26.1%, 1 mm +3.2%, 0.5 mm +63.4%, 0.25 mm +159.5%
+Peak |sigma_y|: 2 mm -26.9%, 1.5 mm -22.9%, 1 mm -23.1%, 0.5 mm -19.5%, 0.25 mm -12.4%
+Peak |tau_xy|: 2 mm -57.7%, 1.5 mm -46.3%, 1 mm -42.7%, 0.5 mm -34.5%, 0.25 mm -24.9%
+Compressive principal |min|: 2 mm -35.1%, 1.5 mm -27.5%, 1 mm -29.2%, 0.5 mm -23.6%, 0.25 mm -14.1%
+Maximum principal tensile peak: 2 mm -89.2%, 1.5 mm -86.6%, 1 mm -81.3%, 0.5 mm -84.9%, 0.25 mm -83.2%
+Peak |Ux|: 2 mm +142.4%, 1.5 mm +140.3%, 1 mm +143.2%, 0.5 mm +138.9%, 0.25 mm +136.5%
+Peak |Uy|: 2 mm +97.8%, 1.5 mm +98.1%, 1 mm +98.0%, 0.5 mm +98.0%, 0.25 mm +98.2%
+
+Observations:
+  - sigma_y peak magnitude is lower in Q4 at all meshes, although the gap
+    narrows with refinement.
+  - shear stress magnitude is lower in Q4 at all meshes; the gap also
+    narrows with refinement.
+  - sigma_x behaves differently: Q4 is lower in the coarser meshes, then
+    rises above ANSYS at 1.0 mm and becomes much higher at 0.5 and 0.25 mm.
+    This is an important warning that local peak locations, extraction
+    methods, or component mapping may differ.
+  - The minimum-principal compressive magnitude is lower in Q4 at every mesh,
+    but the difference narrows toward the finest mesh.
+  - The maximum-principal tensile peak is far lower in Q4 than ANSYS in all
+    five meshes. This comparison is especially sensitive to whether the two
+    postprocessors are reporting the same principal-stress field and sampling
+    convention; verify this before treating it as a direct physical error.
+
+5. FULL RESULT QUANTITIES INCLUDED IN THE CSV
+---------------------------------------------
+The CSV contains minimum and maximum comparisons for:
+  1. Equivalent / von Mises stress
+  2. Normal stress X (assumed mapping)
+  3. Normal stress Y (assumed mapping)
+  4. Shear stress XY
+  5. Equivalent elastic strain
+  6. Total deformation
+  7. Directional deformation X (assumed mapping)
+  8. Directional deformation Y (assumed mapping)
+  9. Minimum principal stress
+ 10. Maximum principal stress
+
+For every quantity and every mesh, the CSV includes:
+  - ANSYS value
+  - Q4 solver value
+  - signed difference (Q4 - ANSYS)
+  - absolute error
+  - absolute relative error percentage
+  - signed relative difference percentage
+
+This is a long-format comparison file: each row is one mesh, one result
+quantity, and one extremum (minimum or maximum).
+
+6. IMPORTANT COMPARABILITY LIMITATIONS
+--------------------------------------
+A. The PDFs are result summaries only. They do not prove the two models used
+   identical applied force, support locations, material assignments,
+   thickness/section settings, or local coordinate systems.
+
+B. The ANSYS labels "Normal Stress", "Normal Stress 2", "Directional
+   Deformation", and "Directional Deformation 2" do not show explicit global
+   axis names in the screenshots. The CSV maps them to sigma_x, sigma_y, Ux,
+   and Uy respectively as a working assumption. Confirm this in ANSYS.
+
+C. Maximum/minimum values may be sampled differently:
+   - The custom Q4 summary states that stresses/strains are based on
+     element-averaged 2x2 Gauss-point values, with von Mises taken as the
+     maximum across the four Gauss points.
+   - Its displacement values are nodal values.
+   - The ANSYS result-summary screenshot does not show whether values are
+     nodal, elemental, extrapolated, or averaged.
+   Different sampling and averaging can change local extrema.
+
+D. The custom Q4 model summary describes a 2-D plane-stress membrane
+   approximation from SHELL181 in-plane connectivity. It does not include
+   shell rotations, bending, transverse shear, or through-thickness stress.
+   Confirm the ANSYS output is extracted from the same physical idealization
+   before interpreting all differences as solver error.
+
+E. The Q4 JSON summaries report section thickness 80 mm for all three
+   sections. Confirm that this is intentional and exactly matches the ANSYS
+   section definition. A thickness mismatch directly changes stiffness and
+   stress/displacement response.
+
+7. MOST LIKELY CHECKS TO PERFORM
+-------------------------------
+Priority 1 - Verify identical model inputs:
+  - Same total applied load and load direction
+  - Same loaded-edge length and load distribution
+  - Same constrained geometry and support DOFs
+  - Same material assigned to each region
+  - Same Young's modulus and Poisson's ratio
+  - Same section thickness for each material region
+  - Same geometry and interface coordinates
+
+Priority 2 - Resolve the deformation factor:
+  - Export ANSYS nodal Ux and Uy at selected identical node coordinates.
+  - Export Q4 nodal Ux and Uy at those same physical coordinates.
+  - Compare each component at the same point, not only global maxima.
+  - Recalculate total deformation consistently as sqrt(Ux^2 + Uy^2).
+  - Check mm versus m conversion and any scale factor in the JSON writer.
+  - Check load normalization and whether total load is applied once or twice.
+  - Check that section thickness is not applied twice or omitted in the
+    stiffness/load formulation.
+
+Priority 3 - Resolve local stress differences:
+  - Record maximum von Mises stress coordinates and element IDs in both
+    solvers for every mesh.
+  - Compare stress at the same physical coordinates and on the same material
+    side of each bonded interface.
+  - Compare integration-point/Gauss-point stress separately from
+    extrapolated and nodally averaged stress.
+  - Inspect the support edge, loaded edge, corners, and bonded interfaces.
+  - Review the 168 degenerate elements excluded from the 0.25 mm Q4 mesh and
+    check whether excluded elements occur near critical regions.
+
+Priority 4 - Compare tensor and principal definitions:
+  - Confirm the ANSYS coordinate system for Normal Stress and Normal Stress 2.
+  - Confirm whether ANSYS "Maximum Principal Stress" is the maximum principal
+    eigenvalue and whether the Q4 field uses the same sign and sampling rule.
+  - Compute both principal stresses from the same sigma_x, sigma_y, tau_xy
+    tensor at matched integration points.
+
+8. INTERPRETATION OF THE ERROR
+------------------------------
+The reported differences are not all the same type:
+
+  - Total deformation: systematic Q4 overprediction by about 98% at every
+    mesh. This is too consistent to attribute to mesh refinement alone.
+  - Von Mises stress: relatively close at 0.5 mm, but differences change
+    sign and the finest mesh has Q4 above ANSYS.
+  - Equivalent strain: Q4 above ANSYS at every mesh, with a growing gap at
+    fine resolution.
+  - Stress components: mixed agreement; some components are systematically
+    below ANSYS while sigma_x becomes much higher on fine meshes.
+  - Principal stress: minimum-principal compression is moderately lower in
+    Q4, while maximum-principal tensile peaks show a large mismatch.
+
+Consequently, the Q4 solver should not yet be declared validated against
+ANSYS. The comparison demonstrates partial agreement in the von Mises
+magnitude and a strong mesh-stable trend in each solver's total deformation,
+but it also reveals systematic deformation disagreement and significant
+local-field differences.
+
+9. FINAL CONCLUSION
+-------------------
+Across all five mesh sizes, the custom Q4 solver and ANSYS show similar
+qualitative trends in several quantities, particularly increasing peak
+equivalent stress with mesh refinement and nearly unchanged maximum total
+deformation within each solver's own mesh series.
+
+However, the absolute results do not agree consistently. The custom Q4
+solver predicts almost twice the ANSYS maximum total deformation at every
+mesh. Its peak von Mises stress is within about 4.3% at 0.5 mm but differs
+by about 6.8% in the opposite direction at 0.25 mm. Equivalent elastic
+strain is higher in Q4 throughout and differs by about 49.8% at the finest
+mesh. Normal and shear stress components show mixed, mesh-dependent
+differences, while principal-stress maxima require a careful definition and
+sampling check.
+
+The next validation step should be a point-to-point comparison of nodal
+displacements and integration-point stresses at identical physical
+coordinates, after confirming identical loads, constraints, materials,
+section thickness, and coordinate-system definitions. Only after these
+checks should the remaining difference be attributed to the Q4 formulation
+or solver implementation.
+
+END OF COMPARISON REPORT

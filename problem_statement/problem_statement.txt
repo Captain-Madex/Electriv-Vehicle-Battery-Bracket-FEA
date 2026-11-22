@@ -1,0 +1,132 @@
+PROBLEM STATEMENT
+=================================================================
+Static structural analysis of an end plate + L-bracket (with gusset)
++ clamp plate supporting a battery block
+=================================================================
+
+
+1. SYSTEM DESCRIPTION
+---------------------
+A battery block of mass m = 60 kg (600 mm long x 300 mm deep x 250 mm
+high) is mounted between two parallel vertical end plates. The clear
+span between the end plates is 740 mm and the end plate height is
+340 mm.
+
+Each end plate carries an L-bracket with a triangular gusset on its
+inner face. A clamp plate sits on the flange of each L-bracket. The
+battery block rests on the two clamp plates, with 40 mm of contact
+at each end. The block's weight is therefore shared equally between
+the left and right brackets.
+
+The system is symmetric about the mid-span cut plane, so only one half
+of the block and one bracket assembly needs to be analysed (the other
+half is its mirror image).
+
+
+2. LOADING AND STATICS (HALF-BLOCK FREE BODY)
+---------------------------------------------
+  Gravity                  g = 9.81 m/s^2
+  Total block weight       W = m g = 60 x 9.81 = 588.6 N
+  Load per bracket         F = W/2 = mg/2 = 294.3 N (downward, -Y)
+
+Free body of the half block (300 mm long):
+  - Weight of half block, W/2 = 294.3 N, acts at its centre of gravity.
+  - Cut plane at mid-span: symmetry, Ux = 0, shear = 0.
+  - Block pushes on the clamp plate: B = 294.3 N.
+  - Reaction at the end plate: R = 294.3 N (upward).
+  - Moment at the end plate: M = 26.5 N.m, from F x d with d = 90 mm.
+
+
+3. 2D MODEL GEOMETRY (all dimensions in mm)
+-------------------------------------------
+Model type: 2D static structural, plane thickness t = 80 mm (out of
+the page, Z direction). X is horizontal (away from the end plate),
+Y is vertical.
+
+  End plate         15 wide x 140 tall.
+
+  L-bracket web     8 thick, 100 tall, attached to the right face of
+                    the end plate. It starts 20 below the top and ends
+                    20 above the bottom of the 140 mm end plate section.
+
+  Gusset            Vertical edge of the web runs approx. 45 mm down
+                    from the web top, then slopes down to meet the
+                    flange top at 45 mm from the end plate face.
+                    (The 45 mm slope start is estimated from photos,
+                    not measured.)
+
+  Flange            8 thick, 110 long, measured from the end plate face.
+
+  Clamp plate       50 long x 6 thick, on top of the flange. It starts
+                    55 mm from the end plate face (45 + 10 gap) and
+                    ends 5 mm before the flange tip. Its centre is
+                    80 mm from the end plate face.
+
+  Horizontal layout from end plate face: 45 (gusset foot) + 10 (gap)
+  + 50 (clamp plate) + 5 (overhang) = 110.
+
+
+4. BOUNDARY CONDITIONS
+----------------------
+  A  Fixed support on two edges:
+       (i)  the left face of the end plate, and
+       (ii) the bottom of the flange (110 mm long).
+
+  B  Force F = mg/2 = 294.3 N, downward (-Y), applied as a uniform
+     pressure on the top face of the clamp plate (50 mm x 80 mm):
+         p = 294.3 N / (50 x 80 mm^2) = 0.0736 MPa
+     The arm of F from the end plate face is 80 mm.
+
+  Mass per bracket: 30 kg (60 kg block / 2 brackets).
+
+
+5. MATERIAL
+-----------
+Not specified on the drawings. To be defined (for example, structural
+steel with E = 200 GPa, nu = 0.3, yield strength to be confirmed).
+
+
+6. OBJECTIVE
+------------
+Determine, for the end plate + L-bracket/gusset + clamp plate assembly
+under the 294.3 N per-bracket load:
+  - total deformation and its maximum location,
+  - equivalent (von Mises) stress and maximum principal stress,
+  - support reactions (force and moment) at the fixed edges,
+  - stress concentration at the web / gusset / flange junction,
+  - factor of safety against yield.
+
+
+7. ASSUMPTIONS
+--------------
+  - Linear elastic material, small deformations, static loading.
+  - Self-weight of the plate, bracket and clamp is neglected.
+  - Parts are bonded (no separation or sliding between end plate,
+    bracket and clamp plate).
+  - The load is a uniform pressure on the clamp plate top face.
+  - The load is shared equally by the two ends (symmetry).
+
+
+8. NOTES / ITEMS TO CONFIRM
+---------------------------
+  a) Contact length: the 3D, side and free body views show 40 mm of
+     block contact on the clamp, but the 2D model applies the load
+     over the full 50 mm clamp plate length.
+
+  b) Load arm and flange length: the free body view uses d = 90 mm and
+     a 120 mm flange (M = 26.5 N.m). The 2D model uses d = 80 mm and a
+     110 mm flange (M = 294.3 x 0.080 = 23.5 N.m). The two differ by
+     10 mm.
+
+  c) End plate height: 340 mm in the side view vs 140 mm in the 2D
+     model. The 2D model appears to be a local section only.
+
+  d) Bracket width: the block is 300 mm deep, but the model thickness
+     is 80 mm. This assumes one 80 mm wide bracket per end carries the
+     full 294.3 N. Confirm the number and width of brackets.
+
+  e) Gusset slope start (about 45 mm below the web top) is estimated.
+
+  f) With the flange bottom fixed, the clamp load goes almost directly
+     into the support. The moment M is then barely transferred to the
+     end plate. Confirm this is the intended boundary condition.

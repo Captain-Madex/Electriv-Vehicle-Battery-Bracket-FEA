@@ -1,0 +1,12 @@
+﻿# 
+# This file contains the parameter values of the Design Points successfully updated by ANSYS Workbench.
+# Project name: fem
+# Creation date: 11/06/2026 20:18:26
+# 
+# 11/06/2026 20:18:26
+# The parameters defined in the project are:
+# ,P1 - Mesh Defeature Size [mm]
+# 
+# The following header line defines the name of the columns by reference to the parameters.
+Name,P1
+DP 0,2

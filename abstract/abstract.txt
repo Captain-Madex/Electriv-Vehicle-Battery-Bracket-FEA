@@ -1,0 +1,38 @@
+ABSTRACT
+=================================================================
+Static structural analysis of an end plate + L-bracket (with gusset)
++ clamp plate supporting a battery block: Python Q4 FEM solver,
+mesh convergence and ANSYS comparison
+=================================================================
+
+
+This study analyses the static structural response of an end plate,
+L-bracket with gusset, and clamp plate that support a 60 kg battery
+block. By symmetry, each bracket carries half the block weight, 294.3 N.
+The assembly is modelled as a 2D plane-stress section (80 mm thick) with
+bonded interfaces. The end-plate face and flange bottom are fixed, and
+the load is applied as a uniform pressure on the clamp plate. An
+independent Python solver using four-node quadrilateral (Q4) elements
+was developed to read the ANSYS CDB mesh, solve for nodal displacements,
+and recover element stresses and strains. The results were compared
+with ANSYS across five mesh sizes: 2.00, 1.50, 1.00, 0.50 and 0.25 mm.
+
+The mesh-convergence study gives two different outcomes. Maximum total
+deformation is effectively mesh-independent in both solvers. ANSYS
+changes by about 0.4% (4.88E-06 to 4.86E-06 mm) and the Q4 solver by
+about 0.1% (about 9.65E-06 to 9.64E-06 mm). Peak von Mises stress has
+not converged. It rises with refinement from 0.152 to 0.261 MPa in ANSYS
+and from 0.121 to 0.279 MPa in the Q4 solver, consistent with local
+stress concentrations being resolved progressively.
+
+Agreement between the two solvers is partial. The Q4 solver overpredicts
+maximum deformation by a near-constant factor of about 1.98 at every
+mesh. Peak von Mises stress differs from ANSYS by -20.3% to +6.8%, and
+the best agreement (-4.3%) is at 0.50 mm. The Q4 solver therefore
+cannot yet be considered validated. The next step is to confirm
+identical inputs (load, supports, thickness, materials) and compare
+displacements and stresses at matching coordinates.
+
+
+Keywords: finite element analysis, battery bracket, Q4 plane-stress
+element, mesh convergence, ANSYS validation, von Mises stress

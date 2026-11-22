@@ -1,0 +1,165 @@
+LITERATURE REVIEW AND APPLICATION TO THE EV BATTERY BRACKET FEM PROJECT
+============================================================================
+
+The three research papers were reviewed to understand how EV battery brackets
+and battery-pack support structures are designed, analysed and optimized using
+finite element methods. The literature provides guidance on structural
+modelling, material selection, loading conditions, mesh refinement, stress
+distribution, deformation and lightweight design.
+
+1. BATTERY BRACKET TOPOLOGY OPTIMIZATION USING 3D PRINTING
+-----------------------------------------------------------
+
+Reference:
+G. Zhang, X. Li, J. Li, X. Zhou, and Y. Zhou, "Optimization design of battery
+bracket for new energy vehicles based on 3D printing technology," Scientific
+Reports, vol. 14, Art. no. 13461, 2024, doi: 10.1038/s41598-024-64393-x.
+
+This paper focuses on reducing the weight of an electric vehicle battery
+bracket while maintaining adequate structural strength. The authors developed
+a 3D model and performed topology optimization. The optimized design was
+manufactured using 3D printing and inspected for dimensional accuracy and
+assembly compatibility.
+
+Important findings reported by the paper:
+- Maximum displacement after optimization: 3.20 mm.
+- Maximum von Mises stress: 240.7 MPa.
+- Minimum factor of safety: 1.
+- Optimized mass: 0.348 kg.
+- Reported mass reduction: approximately 49.2%.
+
+What we have taken from this paper:
+1. The importance of lightweight design in EV battery support structures.
+2. The use of von Mises stress to evaluate structural strength.
+3. The importance of monitoring deformation under applied loads.
+4. The relationship between material reduction and structural performance.
+5. The importance of checking manufacturability and assembly after
+   optimization.
+
+We use these concepts to understand the structural behaviour of our battery
+bracket and identify areas where material may potentially be reduced without
+compromising strength.
+
+2. DESIGN AND ANALYSIS OF BATTERY BRACKET FOR ELECTRIC VEHICLE
+---------------------------------------------------------------
+
+Reference:
+N. S. Chandrakant and D. S. Galhe, "Design and Analysis of Battery Bracket for
+Electric Vehicle," International Journal of Advance Research and Innovative
+Ideas in Education, vol. 10, no. 3, 2024.
+
+This paper discusses the design and finite element analysis of an EV battery
+bracket. It considers the bracket's role in supporting the battery pack and
+maintaining structural integrity under operating loads. The study emphasizes
+CAD modelling, material selection, weight optimization and manufacturability.
+It also discusses structural simulation approaches.
+
+What we have taken from this paper:
+1. The importance of designing a bracket capable of safely supporting the
+   battery.
+2. The use of CAD geometry as the basis for finite element modelling.
+3. The evaluation of stress and deformation under structural loading.
+4. The importance of material selection and weight reduction.
+5. The need to consider operating conditions when evaluating bracket
+   performance.
+
+We use these concepts as a basis for our bracket geometry, structural loading
+approach and evaluation of the resulting displacement and stress fields.
+
+3. OPTIMIZATION AND STRUCTURAL ANALYSIS OF AUTOMOTIVE BATTERY PACKS USING ANSYS
+-------------------------------------------------------------------------------
+
+Reference:
+Y. Liu, C. Liu, J. Tan, Y. He, F. Li, and T. Zhang, "Optimization and
+Structural Analysis of Automotive Battery Packs Using ANSYS," Symmetry,
+vol. 16, no. 11, Art. no. 1464, 2024, doi: 10.3390/sym16111464.
+
+This research investigates the structural performance of an EV battery-pack
+assembly using ANSYS. The authors developed a 3D battery-pack model and carried
+out static structural and modal analyses.
+
+Three operating conditions were considered:
+- Sharp left turn on an uneven road.
+- Sharp right turn on an uneven road.
+- Emergency braking on an uneven road.
+
+The authors also performed mesh-independence testing using different mesh
+sizes. Their final model contained 275,953 elements and 546,089 nodes. The
+modal analysis identified the first natural frequency as 33.69 Hz. The study
+also investigated structural lightweighting and optimization.
+
+What we have taken from this paper:
+1. The importance of applying realistic operating loads to battery-support
+   structures.
+2. The use of ANSYS for static structural analysis.
+3. The importance of mesh refinement and mesh-independence studies.
+4. The evaluation of deformation and stress under different loading
+   conditions.
+5. The importance of structural constraints and proper load transfer.
+6. The relevance of modal analysis for future vibration-related investigations.
+
+We use these concepts particularly for our mesh-convergence study, load
+application, boundary-condition definition and comparison of numerical FEM
+results with ANSYS results.
+
+4. SUMMARY OF CONCEPTS ADOPTED IN OUR PROJECT
+---------------------------------------------
+
+Research concept                     Implementation in our project
+----------------                     -----------------------------
+CAD-based structural modelling       EV battery bracket geometry
+Material selection                   Structural steel
+Structural analysis                  Python FEM and ANSYS
+Stress evaluation                    Element stress and von Mises stress
+Deformation evaluation               Nodal displacement
+Mesh refinement                      1.5, 0.5 and 0.25 mm mesh studies
+Mesh convergence                     Comparison of ANSYS results
+Boundary conditions                  Fixed mounting region
+Load application                     Distributed downward load
+Lightweight design                   Potential future optimization
+
+5. ACTUAL PARAMETERS USED IN OUR FEM PROJECT
+---------------------------------------------
+
+These are our project parameters, not values copied from the research papers.
+
+- Material: Structural steel
+- Young's modulus: 200,000 MPa
+- Poisson's ratio: 0.30
+- Thickness: 2 mm
+- Applied force: 294.3 N
+- Load direction: Negative Y (downward)
+- Loaded edge length: 50 mm
+- Distributed load magnitude: 5.886 N/mm
+
+6. OVERALL CONCLUSION
+---------------------
+
+The reviewed literature establishes the importance of structural analysis,
+material selection, mesh refinement and optimization in EV battery bracket
+design.
+
+The first paper provides guidance on topology optimization and lightweight
+design. The second provides direct background on battery bracket design and
+finite element analysis. The third provides a broader understanding of
+battery-pack structural analysis using ANSYS, including mesh-independence and
+modal analysis.
+
+Based on these studies, our project focuses on developing an independent
+Python-based FEM solver and validating its results against ANSYS. Particular
+attention is given to displacement calculation, stress recovery,
+boundary-condition implementation, load distribution and mesh convergence.
+
+The ultimate objective is to establish a reliable computational workflow
+that can evaluate the structural behaviour of an EV battery bracket and
+provide a foundation for future design optimization.
+
+IMPORTANT DISTINCTION
+---------------------
+
+We have adopted modelling and analysis concepts from these publications. We
+have not copied their geometries, loads, material properties or numerical
+results as inputs to our own simulation. Our results must be validated
+independently.
+
+END OF LITERATURE REVIEW

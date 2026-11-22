@@ -1,0 +1,575 @@
+EV BATTERY BRACKET FEM
+MESH CONVERGENCE AND RESULTS-PATTERN EXPLANATION
+================================================
+
+Purpose
+-------
+This document explains the five uploaded mesh-result summaries and the
+patterns observed as the nominal element size is reduced from 2.0 mm to
+0.25 mm. It is based on the values in the five JSON result summaries.
+
+The five cases are:
+  Mesh 1: 2.00 mm
+  Mesh 2: 1.50 mm
+  Mesh 3: 1.00 mm
+  Mesh 4: 0.50 mm
+  Mesh 5: 0.25 mm
+
+IMPORTANT MODEL DESCRIPTION AND LIMITATION
+------------------------------------------
+All five source summaries describe the model as:
+
+  "2-D Q4 plane-stress membrane approximation using SHELL181 in-plane
+   connectivity."
+
+The model represents in-plane Ux and Uy membrane response. According to the
+source summaries, it does NOT solve shell rotations, bending, transverse
+shear, or through-thickness stress. It is therefore not a complete SHELL181
+shell analysis and should not be described as a full 3-D bracket solution.
+
+This distinction matters for a battery bracket because out-of-plane bending,
+local bending around connections, and through-thickness effects may be
+important in the real component. The present convergence conclusions apply
+to the reported 2-D membrane model only.
+
+The five summaries also report a section thickness of 80 mm for each of the
+three material sections in every mesh. This value is repeated consistently
+in the summaries, but it should be checked against the intended physical
+thickness and ANSYS section definition. Do not confuse this section-thickness
+value with the nominal mesh size.
+
+1. MODEL, MATERIALS, LOADS, AND BOUNDARY CONDITIONS
+---------------------------------------------------
+
+1.1 Geometry represented in the summaries
+  X bounds: -15 mm to 110 mm
+  Y bounds: -20 mm to 120 mm
+
+The same geometry bounds are reported for all five meshes.
+
+1.2 Material definitions (unchanged across the meshes)
+  Material 1 - Steel clamp plate
+    Young's modulus E = 200,000 MPa
+    Poisson's ratio nu = 0.30
+
+  Material 2 - Aluminium bracket/gusset
+    Young's modulus E = 70,000 MPa
+    Poisson's ratio nu = 0.33
+
+  Material 3 - Steel wall
+    Young's modulus E = 200,000 MPa
+    Poisson's ratio nu = 0.30
+
+The material element counts are:
+  Mesh 1: Material 1 = 75;   Material 2 = 653;   Material 3 = 560
+  Mesh 2: Material 1 = 132;  Material 2 = 1,172; Material 3 = 929
+  Mesh 3: Material 1 = 300;  Material 2 = 2,654; Material 3 = 2,100
+  Mesh 4: Material 1 = 1,197;Material 2 = 10,374;Material 3 = 8,351
+  Mesh 5: Material 1 = 4,775;Material 2 = 41,716;Material 3 = 33,774
+
+For every mesh, the three material element counts add up to the valid Q4
+element count. The material distribution therefore remains represented
+through all five mesh cases.
+
+1.3 Applied load
+  Loaded edge length: 50 mm
+  Line load: 5.886 N/mm
+  Resultant force in X: 0 N
+  Resultant force in Y: -294.3 N
+  Total applied force magnitude: 294.3 N
+
+The same physical loaded-edge length, line load, and total resultant are
+reported for every mesh. The number of discretized load-boundary segments
+increases with refinement because the same physical edge is represented by
+more, smaller boundary segments.
+
+1.4 Supports
+  Condition: Ux = Uy = 0 on LEFT_FIXED and BOTTOM_FIXED.
+
+The number of constrained nodes and DOFs increases as the mesh is refined.
+This is expected when the same physical support boundaries are represented
+by more nodes.
+
+  Mesh 1: left fixed nodes 71;  bottom fixed nodes 56;  unique nodes 127;
+          fixed DOFs 254
+  Mesh 2: left fixed nodes 94;  bottom fixed nodes 74;  unique nodes 168;
+          fixed DOFs 336
+  Mesh 3: left fixed nodes 141; bottom fixed nodes 111; unique nodes 252;
+          fixed DOFs 504
+  Mesh 4: left fixed nodes 281; bottom fixed nodes 220; unique nodes 501;
+          fixed DOFs 1,002
+  Mesh 5: left fixed nodes 561; bottom fixed nodes 441; unique nodes 1,002;
+          fixed DOFs 2,004
+
+The source summaries report the same named support condition in all cases.
+The physical locations and definitions of those named sets should still be
+kept identical when exporting and solving each mesh.
+
+2. MESH SIZE AND DISCRETIZATION
+-------------------------------
+
+  Mesh       Nominal size     Nodes       Valid Q4       Degenerate
+  1          2.00 mm          1,498       1,288          6
+  2          1.50 mm          2,513       2,233          10
+  3          1.00 mm          5,471       5,054          10
+  4          0.50 mm         20,761      19,922          40
+  5          0.25 mm         81,984      80,265         168
+
+The number of valid Q4 elements grows from 1,288 to 80,265. The final mesh
+contains about 62.3 times as many valid Q4 elements as Mesh 1. The number of
+nodes grows from 1,498 to 81,984.
+
+This large increase in element count is normal for refinement. In a
+two-dimensional region, halving a broadly uniform element size often creates
+roughly four times as many elements. The Mesh 4 to Mesh 5 element-count ratio
+is about 4.03, which is close to that expectation. The earlier ratios differ
+because the nominal sizes, geometry partitioning, local sizing, and mesh
+topology need not form an exact uniform refinement sequence.
+
+Degenerate elements were excluded from the Q4 solution in all cases:
+  Mesh 1: 6
+  Mesh 2: 10
+  Mesh 3: 10
+  Mesh 4: 40
+  Mesh 5: 168
+
+The excluded count increases as the mesh becomes finer. This does not by
+itself prove that the solution is invalid, but it makes mesh-quality review
+important. Confirm why these elements are degenerate, where they occur, and
+whether their exclusion affects load paths, interfaces, or stress hot spots.
+A refinement study should use a consistent and justified element-quality
+filter for every mesh.
+
+3. PRIMARY CONVERGENCE RESULTS
+------------------------------
+
+The key values are:
+
+  Mesh       Size      Valid Q4     Maximum deformation     Maximum von Mises
+                                   (mm)                    stress (MPa)
+  1          2.00      1,288        9.65416697E-06          0.12125563
+  2          1.50      2,233        9.65290882E-06          0.14602425
+  3          1.00      5,054        9.64334442E-06          0.15198395
+  4          0.50     19,922        9.63929598E-06          0.20479828
+  5          0.25     80,265        9.64047952E-06          0.27908044
+
+  Mesh       Maximum equivalent elastic strain (mm/mm)
+  1          8.35506359E-07
+  2          8.35652330E-07
+  3          9.47455747E-07
+  4          1.36079918E-06
+  5          1.95687164E-06
+
+3.1 Total deformation: nearly stable
+------------------------------------
+
+The maximum total deformation changes only slightly as the mesh is refined:
+
+  Mesh 1: 9.65416697E-06 mm
+  Mesh 2: 9.65290882E-06 mm
+  Mesh 3: 9.64334442E-06 mm
+  Mesh 4: 9.63929598E-06 mm
+  Mesh 5: 9.64047952E-06 mm
+
+From Mesh 1 to Mesh 5, the maximum deformation decreases by approximately
+0.1418%. Between Mesh 4 and Mesh 5, it increases by approximately 0.0123%.
+The last two values are therefore extremely close.
+
+The sequence is not strictly decreasing: the Mesh 5 value is slightly higher
+than Mesh 4. This small change is consistent with a stable plateau rather
+than a meaningful increase in global deformation.
+
+Interpretation:
+  - The global in-plane deformation response is nearly mesh-independent over
+    the tested range.
+  - The overall stiffness/compliance predicted by these five cases appears
+    stable with respect to this displacement measure.
+  - The conclusion applies to maximum total deformation in this model; it
+    does not prove that every local displacement or every stress is converged.
+
+3.2 Directional displacement patterns
+--------------------------------------
+
+Maximum absolute X-direction displacement:
+  Mesh 1: 2.39969450E-06 mm
+  Mesh 2: 2.35424035E-06 mm
+  Mesh 3: 2.32656267E-06 mm
+  Mesh 4: 2.28224676E-06 mm
+  Mesh 5: 2.26877029E-06 mm
+
+This X-direction maximum decreases gradually with refinement. The overall
+change is modest compared with the value itself.
+
+Minimum Y-direction displacement:
+  Mesh 1: -9.64730877E-06 mm
+  Mesh 2: -9.64453262E-06 mm
+  Mesh 3: -9.63279777E-06 mm
+  Mesh 4: -9.62928946E-06 mm
+  Mesh 5: -9.62953455E-06 mm
+
+The largest-magnitude vertical displacement is also very stable. The Mesh 4
+and Mesh 5 values differ by only a very small amount.
+
+The minimum total deformation and minimum displacement values are zero in
+the summaries, consistent with constrained nodes. The small positive maximum
+Y displacements are close to zero and remain very small.
+
+Overall, the directional displacement components support the same
+conclusion as total deformation: the global displacement field is stable
+across the five meshes.
+
+4. STRESS CONVERGENCE AND STRESS COMPONENT PATTERNS
+--------------------------------------------------
+
+4.1 Maximum von Mises stress: not converged
+-------------------------------------------
+
+  Mesh       Maximum von Mises stress (MPa)    Change from previous mesh
+  1          0.12125563                        -
+  2          0.14602425                        +20.43%
+  3          0.15198395                        +4.08%
+  4          0.20479828                        +34.75%
+  5          0.27908044                        +36.27%
+
+From Mesh 1 to Mesh 5, the reported maximum von Mises stress increases by
+approximately 130.16%. The Mesh 5 maximum is about 2.30 times the Mesh 1
+maximum. Between Mesh 4 and Mesh 5 alone, it increases by approximately
+36.27%.
+
+There is no plateau in the reported maximum stress. Therefore, the maximum
+von Mises stress is NOT converged over the tested mesh range.
+
+A rising peak stress during refinement can have several explanations:
+  - A finer mesh is resolving a steep stress gradient that a coarse mesh
+    smooths out.
+  - The maximum may be near a sharp re-entrant corner or geometric feature.
+  - The maximum may be near a support, load boundary, or bonded interface.
+  - A local idealization may create a stress singularity or near-singular
+    concentration.
+  - The location of the maximum may move between meshes.
+  - Element shape, local distortion, or treatment of excluded degenerate
+    elements may affect the reported maximum.
+
+These are possible explanations, not confirmed causes. The summaries alone
+do not identify the coordinates or physical location of the maximum. The
+maximum-stress location must be extracted for each mesh before selecting the
+correct explanation.
+
+4.2 Normal stress in X direction
+--------------------------------
+
+Reported range of normal stress X (MPa):
+
+  Mesh       Minimum             Maximum
+  1          -0.02436303          0.00000000
+  2          -0.02785245          0.00147470
+  3          -0.04096518          0.00200076
+  4          -0.06575730          0.00541223
+  5          -0.10353478          0.00802373
+
+The most negative X-normal stress becomes increasingly negative as the mesh
+is refined. The positive maximum also rises slightly. The overall stress
+range becomes wider.
+
+This is another indication that local stress extrema are mesh-sensitive.
+The increasingly negative minimum should not be ignored simply because the
+reported maximum von Mises stress is the headline value.
+
+4.3 Normal stress in Y direction
+--------------------------------
+
+Reported range of normal stress Y (MPa):
+
+  Mesh       Minimum             Maximum
+  1          -0.09656787          0.00016969
+  2          -0.10890302          0.00115374
+  3          -0.11748996          0.00290312
+  4          -0.14995650          0.00446479
+  5          -0.19518594          0.00581142
+
+The minimum Y-normal stress becomes more negative with every refinement.
+The positive maximum also increases. Thus, the magnitude of the local
+vertical compressive stress is not stabilizing in the tested meshes.
+
+4.4 Shear stress XY
+-------------------
+
+Reported range of shear stress XY (MPa):
+
+  Mesh       Minimum             Maximum
+  1          -0.02321034          0.02043749
+  2          -0.02902479          0.02334177
+  3          -0.03476508          0.03078793
+  4          -0.04940698          0.04407800
+  5          -0.06967131          0.06208744
+
+Both the negative and positive shear-stress extrema increase in magnitude
+with refinement. The shear-stress range is therefore widening rather than
+approaching a stable maximum/minimum in the reported data.
+
+4.5 Principal stresses
+----------------------
+
+Maximum-principal-stress field, reported minimum and maximum (MPa):
+
+  Mesh       Minimum             Maximum
+  1          -0.02349082          0.00186461
+  2          -0.02364886          0.00260801
+  3          -0.02367563          0.00480385
+  4          -0.03261727          0.00547539
+  5          -0.04788548          0.00802418
+
+The positive maximum of this field increases from about 0.00186 MPa to
+0.00802 MPa. The negative minimum also becomes more negative. The field range
+is widening with refinement.
+
+Minimum-principal-stress field, reported minimum and maximum (MPa):
+
+  Mesh       Minimum             Maximum
+  1          -0.10179712          0.00000000
+  2          -0.11822487          0.00000000
+  3          -0.12683778          0.00000000
+  4          -0.16671787          0.00000000
+  5          -0.22359849          0.00001577
+
+The minimum value becomes increasingly compressive as the mesh is refined.
+The tiny positive maximum in Mesh 5 is close to zero and should not be
+interpreted as a meaningful tensile stress.
+
+Terminology caution:
+  The source summaries also include a "maximum absolute" value for the
+  maximum-principal-stress field. In these data, that absolute value is
+  dominated by the magnitude of the negative minimum, not by the positive
+  tensile maximum. When reporting tensile principal stress, use the positive
+  maximum of the maximum-principal-stress field. When reporting the strongest
+  compressive principal stress, use the negative minimum of the
+  minimum-principal-stress field.
+
+4.6 Overall stress pattern
+--------------------------
+
+The X-normal, Y-normal, shear, and principal-stress ranges all become wider
+as the mesh is refined. This is consistent with the rising maximum von Mises
+stress: the local stress field is still sensitive to mesh resolution.
+
+A peak value is especially sensitive to a single local element or integration
+point. It can change even when most of the structure's stress field is
+stable. The current summaries provide minimum and maximum values, not
+coordinate-matched stress histories or stress-path values. They cannot show
+whether the same physical point is responsible for the maximum in every mesh.
+
+5. EQUIVALENT ELASTIC STRAIN
+----------------------------
+
+Maximum equivalent elastic strain:
+
+  Mesh       Maximum equivalent elastic strain (mm/mm)
+  1          8.35506359E-07
+  2          8.35652330E-07
+  3          9.47455747E-07
+  4          1.36079918E-06
+  5          1.95687164E-06
+
+The maximum equivalent elastic strain changes very little from Mesh 1 to
+Mesh 2, then increases in Mesh 3, Mesh 4, and Mesh 5. The increase from Mesh 4
+to Mesh 5 is approximately 43.80%. From Mesh 1 to Mesh 5 it increases by
+approximately 134.21%.
+
+Therefore, the reported maximum equivalent elastic strain is NOT converged.
+
+The source defines this equivalent strain as a 3-D von-Mises equivalent
+strain, with plane-stress epsilon-z inferred from isotropic elasticity. It
+should not be confused with a directly reported individual component strain
+such as epsilon-x or epsilon-y.
+
+The rising peak equivalent strain is consistent with the rising peak stress.
+However, the summaries do not prove that the maximum strain and maximum
+stress occur at exactly the same location.
+
+6. BONDED INTERFACES
+--------------------
+
+The source summaries identify two tied interfaces:
+  1. MAT3 steel wall to MAT2 aluminium bracket at x = 0 mm.
+  2. MAT2 aluminium bracket to MAT1 steel clamp at y = 8 mm.
+
+Reported interface quantities:
+
+  Mesh       Wall-bracket slave nodes   Bracket-clamp slave nodes   Tie equations
+  1          50                         26                          152
+  2          68                         34                          204
+  3          101                        51                          304
+  4          201                        101                         604
+  5          401                        201                         1,204
+
+The counts increase with refinement because more nodes are available along
+the same interface boundaries. This is expected.
+
+However, because material interfaces can contain strong stress gradients,
+the interface regions should be inspected when investigating the increasing
+stress peaks. Check that the tied-node pairing, master/slave selection, and
+interface locations are consistent across all meshes.
+
+7. FORCE EQUILIBRIUM
+--------------------
+
+The reaction forces reported by the summaries are:
+
+  Mesh       Reaction X (N)       Reaction Y (N)
+  1          1.38E-14              294.300000
+  2         -1.50E-13              294.300000
+  3         -2.67E-13              294.300000
+  4         -1.99E-13              294.300000
+  5          2.08E-13              294.300000
+
+The applied resultant is 0 N in X and -294.3 N in Y. The support reaction is
+approximately 0 N in X and +294.3 N in Y. The reported force-balance residuals
+are extremely small, on the order of numerical round-off.
+
+Interpretation:
+  - The applied load and reaction forces balance globally in every mesh.
+  - This is a useful equilibrium and load-assembly check.
+  - Force equilibrium does NOT prove mesh convergence of stress or strain.
+    A model can satisfy global equilibrium while local stress peaks continue
+    changing with mesh refinement.
+
+8. OVERALL CONVERGENCE JUDGEMENT
+-------------------------------
+
+  Quantity                         Assessment
+  Maximum total deformation        Nearly converged / stable
+  Maximum absolute X displacement  Stable trend
+  Maximum-magnitude Y displacement Stable trend
+  Maximum von Mises stress         Not converged
+  Normal stress X extrema          Not converged / mesh-sensitive
+  Normal stress Y extrema          Not converged / mesh-sensitive
+  Shear stress XY extrema          Not converged / mesh-sensitive
+  Principal stress extrema        Not converged / mesh-sensitive
+  Maximum equivalent strain        Not converged
+  Global force equilibrium         Satisfied in all five cases
+  Bonded interface counts          Increase consistently with refinement
+
+The most important pattern is the difference between global and local
+quantities:
+
+  GLOBAL RESPONSE:
+    Maximum deformation changes by only about 0.142% from Mesh 1 to Mesh 5.
+    This indicates that the global in-plane displacement response is stable.
+
+  LOCAL RESPONSE:
+    Maximum von Mises stress rises by about 130.16%.
+    Maximum equivalent strain rises by about 134.21%.
+    Normal, shear, and principal stress extrema also increase in magnitude.
+    These local quantities are not yet mesh-independent.
+
+It is possible for displacement to converge before peak stress. Displacement
+is a global response, whereas a maximum stress is a local extreme that can
+be strongly affected by a small region, a geometric corner, an interface, or
+a boundary-condition idealization.
+
+9. RECOMMENDED NEXT STEPS
+-------------------------
+
+Do not immediately create another globally finer mesh without first finding
+where the maximum stress occurs. Follow this sequence:
+
+Step 1 - Locate each peak:
+  Export the coordinates, element ID, material ID, and stress value of the
+  maximum von Mises stress for each mesh. Also record the coordinates and
+  values of the maximum equivalent strain and important component-stress
+  extrema.
+
+Step 2 - Check whether the peak moves:
+  Plot or list the peak coordinates for Mesh 1 through Mesh 5. Determine
+  whether the maximum stays at the same physical feature or jumps between
+  locations.
+
+Step 3 - Inspect the local geometry:
+  Review sharp internal corners, re-entrant corners, material interfaces,
+  tied boundaries, load application edges, and fixed support edges. A peak
+  at an idealized sharp corner or boundary may behave like a stress
+  singularity.
+
+Step 4 - Check mesh quality:
+  Inspect element aspect ratio, skewness, Jacobian quality, element
+  orientation, and the locations of all excluded degenerate elements.
+  Confirm that element filtering is consistent across the five meshes.
+
+Step 5 - Compare a fixed physical location:
+  Extract stress at the same physical coordinate or along the same physical
+  path for every mesh. For a material interface, consistently sample the
+  same material side. Do not compare only each mesh's unconstrained global
+  maximum if the peak location changes.
+
+Step 6 - Compare a finite region:
+  In addition to the absolute maximum, compare an average or percentile
+  stress over the same small physical region. A fixed-region average or a
+  high percentile can be more informative when a single-point peak is
+  singular or unusually sensitive.
+
+Step 7 - Refine locally:
+  Once the peak location and cause are understood, refine that region while
+  keeping the geometry, loads, supports, materials, section definitions,
+  and extraction procedure consistent.
+
+Step 8 - Reassess the model dimensionality:
+  If bracket bending or out-of-plane effects are important, build and verify
+  a suitable shell or 3-D solid model. The present 2-D membrane model cannot
+  establish convergence of bending or through-thickness stresses.
+
+10. WHY A FORMAL GCI VALUE IS NOT GIVEN
+---------------------------------------
+
+A formal Grid Convergence Index (GCI) or Richardson extrapolation value is
+not reported in this document.
+
+The nominal mesh sizes are 2.0, 1.5, 1.0, 0.5, and 0.25 mm. Their successive
+refinement ratios are not all identical. In addition, the maximum stress
+does not show a plateau or an established asymptotic convergent trend.
+The meshes also contain different numbers of excluded degenerate elements.
+
+A formal GCI study requires a justified systematic refinement family,
+consistent geometry and result extraction, and evidence that the selected
+quantity is in an appropriate convergence regime. The present data are
+sufficient to identify trends and assess displacement stability, but they
+are not sufficient to claim a reliable stress GCI.
+
+11. REPORT-READY CONCLUSION
+---------------------------
+
+A mesh refinement study was performed for the EV battery bracket using five
+nominal mesh sizes: 2.0 mm, 1.5 mm, 1.0 mm, 0.5 mm, and 0.25 mm. The number
+of valid Q4 elements increased from 1,288 in Mesh 1 to 80,265 in Mesh 5.
+The applied load, material definitions, geometry bounds, and named support
+conditions were kept consistent in the uploaded result summaries. The total
+applied load was 294.3 N in the negative Y direction.
+
+The maximum total deformation remained nearly unchanged during refinement,
+decreasing from 9.65417E-06 mm to 9.64048E-06 mm. The overall change was
+approximately 0.142%, and the difference between the final two meshes was
+approximately 0.0123%. The global in-plane displacement response can
+therefore be considered nearly converged over the tested mesh range.
+
+The local stress and strain results showed a different pattern. The maximum
+von Mises stress increased from 0.12126 MPa to 0.27908 MPa, an increase of
+approximately 130.16%. The maximum equivalent elastic strain increased from
+8.35506E-07 to 1.95687E-06 mm/mm, an increase of approximately 134.21%.
+The normal, shear, and principal stress extrema also increased in magnitude
+as the mesh was refined. These results indicate that the local peak stress
+and strain fields are still mesh-sensitive and have not demonstrated
+convergence.
+
+The reaction forces balanced the applied 294.3 N load in all five cases,
+confirming global force equilibrium. Nevertheless, equilibrium does not
+establish local stress convergence. The next stage should identify the
+coordinates and element locations of the peak stress in every mesh, inspect
+the associated geometry and boundary conditions, and compare stress at
+consistent physical locations or over a fixed region.
+
+Finally, all conclusions apply only to the 2-D Q4 plane-stress membrane
+approximation represented in the supplied summaries. Since shell rotations,
+bending, transverse shear, and through-thickness stresses are not included,
+a full shell or 3-D solid analysis may be needed to assess the complete
+structural response of the EV battery bracket.
+
+END OF DOCUMENT

@@ -1,0 +1,436 @@
+EV BATTERY BRACKET FEM
+ANSYS-ONLY MESH CONVERGENCE ANALYSIS
+====================================
+
+1. PURPOSE AND SCOPE
+--------------------
+This report evaluates mesh convergence using ONLY the ANSYS result-summary
+values supplied in the five uploaded PDFs. It does not use or compare the
+custom Q4 solver results.
+
+The five ANSYS result summaries are paired with the mesh labels in their
+filenames:
+  2.0 mm
+  1.5 mm
+  1.0 mm
+  0.5 mm
+  0.25 mm
+
+The PDFs are single-page ANSYS "Solution Quantities and Result Summary"
+screenshots. They provide minimum and maximum result values. The report
+studies how these reported extrema change as the nominal mesh size decreases.
+
+IMPORTANT:
+The PDFs do not contain node counts, element counts, mesh quality metrics,
+peak-result coordinates, or full model setup details. This analysis therefore
+uses the nominal mesh size from each filename and the numerical result
+summaries. It cannot independently verify whether every mesh used identical
+geometry, loading, boundary conditions, material settings, section thickness,
+or result extraction settings.
+
+2. METHOD AND MEANING OF THE PERCENTAGE CHANGES
+------------------------------------------------
+For a positive maximum result, the percentage change between two consecutive
+meshes is:
+
+  Change (%) = (new mesh result - previous mesh result)
+               / |previous mesh result| x 100
+
+For a minimum result, the report generally examines its magnitude, |minimum|,
+when discussing the development of a compressive or negative extreme. This
+avoids confusing percentage signs caused by negative values.
+
+These percentages describe changes during mesh refinement. They are NOT
+errors relative to an exact solution, and they are NOT errors relative to
+another solver.
+
+A small change between consecutive meshes suggests that the quantity may be
+approaching a stable value. A continuing increase or decrease without a
+plateau indicates that the reported extreme has not demonstrated convergence
+over the tested mesh range.
+
+3. ANSYS RESULT DATA
+--------------------
+
+3.1 Summary of key maximum values
+
+Mesh size     Total deformation       Equivalent stress       Equivalent strain
+              (mm)                    (MPa)                   (mm/mm)
+2.00 mm       4.8777E-06              0.15211                 7.6053E-07
+1.50 mm       4.8682E-06              0.15933                 7.9667E-07
+1.00 mm       4.8655E-06              0.17296                 8.6481E-07
+0.50 mm       4.8623E-06              0.21403                 1.0702E-06
+0.25 mm       4.8591E-06              0.26134                 1.3067E-06
+
+4. TOTAL DEFORMATION CONVERGENCE
+--------------------------------
+Maximum total deformation:
+
+  2.00 mm: 4.8777E-06 mm
+  1.50 mm: 4.8682E-06 mm
+  1.00 mm: 4.8655E-06 mm
+  0.50 mm: 4.8623E-06 mm
+  0.25 mm: 4.8591E-06 mm
+
+Successive changes:
+  2.00 -> 1.50 mm: -0.19%
+  1.50 -> 1.00 mm: -0.06%
+  1.00 -> 0.50 mm: -0.07%
+  0.50 -> 0.25 mm: -0.07%
+
+Overall change from 2.00 mm to 0.25 mm: -0.38%.
+
+Interpretation:
+The maximum total deformation decreases very slightly and progressively
+approaches a stable value. The change between the final two meshes is only
+about 0.07%. The result therefore shows a strong plateau and can be described
+as nearly converged over the tested mesh range.
+
+The maximum deformation is a global response quantity. Its stability
+indicates that the overall displacement response is not changing
+significantly with further refinement in these five runs.
+
+This conclusion is limited to the reported maximum total deformation. It
+does not establish convergence of local stress, strain, or all field values.
+
+5. EQUIVALENT STRESS CONVERGENCE
+--------------------------------
+Maximum equivalent stress (von Mises):
+
+  2.00 mm: 0.15211 MPa
+  1.50 mm: 0.15933 MPa
+  1.00 mm: 0.17296 MPa
+  0.50 mm: 0.21403 MPa
+  0.25 mm: 0.26134 MPa
+
+Successive changes:
+  2.00 -> 1.50 mm: +4.75%
+  1.50 -> 1.00 mm: +8.55%
+  1.00 -> 0.50 mm: +23.75%
+  0.50 -> 0.25 mm: +22.10%
+
+Overall increase from 2.00 mm to 0.25 mm: +71.81%.
+
+Interpretation:
+The maximum equivalent stress increases at every refinement step. The
+increase becomes much larger after the mesh is refined below 1.0 mm. The
+final two meshes still differ by about 22.10%. There is no stable plateau in
+the maximum von Mises stress.
+
+Therefore, the reported peak equivalent stress is NOT converged over the
+tested mesh range.
+
+A rising peak stress can occur when a finer mesh resolves a steep local
+stress gradient that a coarser mesh smooths. It can also be associated with
+sharp corners, idealized constraints, point-like or abrupt load application,
+material interfaces, or a stress singularity. The result-summary PDFs do not
+include peak coordinates, so they do not identify which explanation applies.
+
+The maximum stress location and the local mesh should be inspected before
+deciding whether another global refinement is useful.
+
+6. EQUIVALENT ELASTIC STRAIN CONVERGENCE
+----------------------------------------
+Maximum equivalent elastic strain:
+
+  2.00 mm: 7.6053E-07 mm/mm
+  1.50 mm: 7.9667E-07 mm/mm
+  1.00 mm: 8.6481E-07 mm/mm
+  0.50 mm: 1.0702E-06 mm/mm
+  0.25 mm: 1.3067E-06 mm/mm
+
+Successive changes:
+  2.00 -> 1.50 mm: +4.75%
+  1.50 -> 1.00 mm: +8.55%
+  1.00 -> 0.50 mm: +23.75%
+  0.50 -> 0.25 mm: +22.10%
+
+Overall increase: +71.81%.
+
+Interpretation:
+The equivalent elastic strain follows almost exactly the same percentage
+trend as maximum equivalent stress. It increases at every refinement step,
+with a substantial increase in the two finest meshes. It has not reached a
+plateau and should be classified as NOT converged over this range.
+
+The nearly identical percentage trends for equivalent stress and
+equivalent elastic strain are consistent with these quantities being
+closely related for the elastic material response. This similarity does not
+by itself prove that the extraction methods or local peak locations are
+identical.
+
+7. NORMAL STRESS TRENDS
+-----------------------
+
+The ANSYS screenshot labels these quantities "Normal Stress" and
+"Normal Stress 2". The screenshots do not explicitly identify their global
+coordinate axes. This report therefore preserves the ANSYS labels and does
+not assume a particular X/Y mapping.
+
+7.1 Normal Stress
+
+Reported minimum and maximum (MPa):
+
+Mesh       Minimum              Maximum
+2.00 mm    -0.034454            0.0030062
+1.50 mm    -0.037666            0.0036494
+1.00 mm    -0.039695            0.0034144
+0.50 mm    -0.040246            0.0053583
+0.25 mm    -0.039903            0.0073851
+
+The absolute magnitude of the minimum (compressive-side extreme) changes:
+  2.00 -> 1.50 mm: +9.32%
+  1.50 -> 1.00 mm: +5.39%
+  1.00 -> 0.50 mm: +1.39%
+  0.50 -> 0.25 mm: -0.85%
+
+The compressive-side minimum appears to be approaching a plateau around
+0.04 MPa in magnitude. However, the reported positive maximum increases
+from 0.0030062 MPa to 0.0073851 MPa, so the tensile-side maximum is still
+changing significantly.
+
+Interpretation:
+The two extrema have different convergence behaviour. It would be incorrect
+to declare the whole Normal Stress result converged solely because its
+negative minimum becomes stable. The positive maximum is not stable over
+the tested mesh range.
+
+7.2 Normal Stress 2
+
+Reported minimum and maximum (MPa):
+
+Mesh       Minimum              Maximum
+2.00 mm    -0.13213             0.014497
+1.50 mm    -0.14126             0.006649
+1.00 mm    -0.15286             0.021159
+0.50 mm    -0.18624             0.025375
+0.25 mm    -0.2228              0.0299
+
+The magnitude of the negative minimum increases:
+  2.00 -> 1.50 mm: +6.91%
+  1.50 -> 1.00 mm: +8.21%
+  1.00 -> 0.50 mm: +21.84%
+  0.50 -> 0.25 mm: +19.63%
+
+Overall, the compressive-side magnitude increases by about 68.62%.
+The positive maximum also increases from 0.014497 MPa to 0.0299 MPa.
+
+Interpretation:
+Neither extremum shows a clear plateau. Normal Stress 2 should be treated as
+mesh-sensitive and not converged based on these maximum/minimum summaries.
+
+8. SHEAR STRESS TREND
+---------------------
+
+Reported minimum and maximum shear stress (MPa):
+
+Mesh       Minimum              Maximum
+2.00 mm    -0.054905            0.050879
+1.50 mm    -0.054015            0.051187
+1.00 mm    -0.06067             0.056133
+0.50 mm    -0.075472            0.071511
+0.25 mm    -0.09283             0.08069
+
+The peak absolute shear stress magnitude, defined as the larger of the
+absolute minimum and absolute maximum, is:
+
+  2.00 mm: 0.054905 MPa
+  1.50 mm: 0.054015 MPa
+  1.00 mm: 0.060670 MPa
+  0.50 mm: 0.075472 MPa
+  0.25 mm: 0.092830 MPa
+
+Successive changes in peak absolute magnitude:
+  2.00 -> 1.50 mm: -1.62%
+  1.50 -> 1.00 mm: +12.32%
+  1.00 -> 0.50 mm: +24.40%
+  0.50 -> 0.25 mm: +23.00%
+
+Overall increase: approximately 69.07%.
+
+Interpretation:
+The shear-stress peak changes very little between the two coarsest meshes,
+then increases substantially as the mesh is refined. The final two meshes
+still differ by about 23.00%. The shear-stress peak has not converged over
+the tested range.
+
+9. PRINCIPAL STRESS TRENDS
+--------------------------
+
+9.1 Minimum principal stress
+
+The minimum principal stress is compressive (negative) in the summaries.
+
+Mesh       Minimum principal stress (MPa)
+2.00 mm    -0.15677
+1.50 mm    -0.16313
+1.00 mm    -0.17924
+0.50 mm    -0.21810
+0.25 mm    -0.26042
+
+Its absolute magnitude increases:
+  2.00 -> 1.50 mm: +4.06%
+  1.50 -> 1.00 mm: +9.88%
+  1.00 -> 0.50 mm: +21.68%
+  0.50 -> 0.25 mm: +19.40%
+
+Overall increase in compressive magnitude: approximately 66.12%.
+
+Interpretation:
+The compressive principal-stress extreme continues increasing in magnitude.
+It does not show a plateau and is not converged.
+
+9.2 Maximum principal stress
+
+The maximum principal stress is tensile (positive) in the summaries.
+
+Mesh       Maximum principal stress (MPa)
+2.00 mm    0.017284
+1.50 mm    0.019440
+1.00 mm    0.025648
+0.50 mm    0.036197
+0.25 mm    0.047877
+
+Successive changes:
+  2.00 -> 1.50 mm: +12.47%
+  1.50 -> 1.00 mm: +31.93%
+  1.00 -> 0.50 mm: +41.13%
+  0.50 -> 0.25 mm: +32.27%
+
+Overall increase: approximately 177.00%.
+
+Interpretation:
+The tensile principal-stress maximum increases strongly with every refinement
+step. Its value more than doubles between the coarsest and finest meshes.
+This is clearly not converged over the tested range.
+
+10. DIRECTIONAL DEFORMATION TRENDS
+----------------------------------
+
+The PDFs use the labels "Directional Deformation" and
+"Directional Deformation 2". No global axes are explicitly visible in the
+result-summary screenshots, so the names are retained as shown rather than
+renamed X and Y.
+
+Directional Deformation:
+  Minimum: -8.4361E-07, -8.2605E-07, -8.2884E-07,
+           -8.3478E-07, -8.4282E-07 mm
+  Maximum:  9.8999E-07,  9.7984E-07,  9.5651E-07,
+            9.5545E-07,  9.5937E-07 mm
+
+Its extrema remain within a relatively narrow band. The maximum positive
+value falls slightly and then stabilizes. The negative minimum returns
+close to its Mesh 1 magnitude by Mesh 5.
+
+Directional Deformation 2:
+  Minimum: -4.8777E-06, -4.8681E-06, -4.8654E-06,
+           -4.8622E-06, -4.8590E-06 mm
+  Maximum:  4.5162E-09,  2.7416E-09,  1.3055E-09,
+            7.8441E-09,  9.6398E-09 mm
+
+The minimum value changes by only about 0.38% in magnitude from the
+coarsest to finest mesh. This closely tracks the maximum total deformation.
+The positive maximum is extremely close to zero, so percentage changes in
+that small value are not meaningful.
+
+Interpretation:
+The directional displacement results are generally stable, particularly
+the negative extreme of Directional Deformation 2. Directional
+Deformation 1 has some small changes in both extrema. These summaries
+support the view that the global displacement response is much more stable
+than the stress extrema.
+
+11. OVERALL ANSYS-ONLY CONVERGENCE ASSESSMENT
+---------------------------------------------
+
+Quantity                               Assessment
+Maximum total deformation              Nearly converged / plateau
+Directional Deformation                 Generally stable
+Directional Deformation 2               Stable negative extreme
+Maximum equivalent stress               Not converged
+Maximum equivalent elastic strain       Not converged
+Normal Stress minimum magnitude         Appears close to a plateau
+Normal Stress maximum                   Not converged
+Normal Stress 2 minimum and maximum     Not converged
+Shear Stress extrema                    Not converged
+Minimum principal stress magnitude     Not converged
+Maximum principal tensile stress        Not converged
+
+The central pattern is that the displacement response stabilizes much
+earlier than the local stress and strain extrema.
+
+This is a common type of result in finite element analysis: global
+displacements can become stable while peak stresses at localized
+concentrations continue to change as the mesh resolves sharper gradients.
+However, the summaries do not identify the location or cause of any peak.
+Those must be checked in the ANSYS result contours and element/node data.
+
+12. WHY A FORMAL GCI VALUE IS NOT REPORTED
+------------------------------------------
+A formal Grid Convergence Index (GCI) or Richardson extrapolation value is
+not reported.
+
+Reasons:
+  - The PDFs provide only result min/max summaries, not full mesh statistics.
+  - The nominal refinement ratios are not all equal.
+  - Several local stress extrema continue to increase significantly.
+  - The peak coordinates and extraction/averaging conventions are not shown.
+  - An asymptotic convergence regime has not been demonstrated for the
+    stress and strain maxima.
+
+The available results support trend analysis and a practical plateau
+assessment for displacement. They do not support a defensible stress GCI
+claim at this stage.
+
+13. RECOMMENDED NEXT STEPS
+--------------------------
+1. In ANSYS, identify the location and element/node ID of the maximum
+   equivalent stress for every mesh.
+2. Record the corresponding coordinates for all five mesh sizes.
+3. Determine whether the peak remains at the same physical location.
+4. Inspect sharp corners, re-entrant geometry, load edges, fixed supports,
+   and material interfaces.
+5. Compare stress along the same physical path or at the same physical
+   coordinates for every mesh.
+6. Compare both integration-point and nodally averaged/extrapolated values
+   using a consistent method.
+7. Inspect the local element quality around the peak.
+8. If the peak is local, refine that region and repeat the study.
+9. Keep geometry, loads, supports, material assignments, section thickness,
+   coordinate systems, and result extraction settings unchanged.
+
+A further global mesh refinement should not be the first action until the
+peak location and its physical meaning are understood.
+
+14. REPORT-READY CONCLUSION
+---------------------------
+An ANSYS-only mesh refinement study was performed using five nominal
+element sizes: 2.0 mm, 1.5 mm, 1.0 mm, 0.5 mm, and 0.25 mm. The maximum
+total deformation decreased slightly from 4.8777E-06 mm to 4.8591E-06 mm,
+representing an overall change of approximately 0.38%. The change between
+the final two meshes was approximately 0.07%, indicating that the global
+deformation response has reached a stable plateau over the tested range.
+
+In contrast, the maximum equivalent stress increased from 0.15211 MPa to
+0.26134 MPa, an increase of approximately 71.81%. The maximum equivalent
+elastic strain increased by approximately 71.81%, from 7.6053E-07 to
+1.3067E-06 mm/mm. The minimum principal compressive stress magnitude,
+maximum principal tensile stress, Normal Stress 2, and peak shear stress
+also continued to increase as the mesh was refined. These local stress and
+strain quantities have not demonstrated mesh convergence.
+
+The compressive-side minimum of Normal Stress appears to approach a
+plateau, but its positive maximum continues to increase. Therefore, the
+whole Normal Stress field should not be declared converged based only on
+its minimum value. The directional deformation results are generally
+stable and support the observed convergence of global displacement.
+
+The results show that, for these ANSYS runs, global displacement is nearly
+mesh-independent while local stress and strain extrema remain
+mesh-sensitive. The next step is to identify the peak-stress coordinates
+for each mesh, inspect the corresponding local geometry and boundary
+conditions, and compare results at consistent physical locations. A formal
+stress GCI should be postponed until a systematic refinement sequence and
+an appropriate convergence regime are established.
+
+END OF REPORT

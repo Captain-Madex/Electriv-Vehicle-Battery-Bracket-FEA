@@ -1,0 +1,24 @@
+{
+  "status": "COMPLETED",
+  "mesh_file": "EV_Bracket_MESH_3.CDB",
+  "result_folder": "Mesh_3",
+  "load_N": 294.3,
+  "load_direction": "global -Y",
+  "supports": "LEFT_FIXED and BOTTOM_FIXED; Ux=Uy=0",
+  "result_parameters": [
+    "total_deformation_mm",
+    "overall_displacement_mm",
+    "directional_deformation_x_mm",
+    "horizontal_displacement_mm",
+    "directional_deformation_y_mm",
+    "vertical_displacement_mm",
+    "equivalent_stress_von_mises_MPa",
+    "normal_stress_x_longitudinal_MPa",
+    "normal_stress_y_vertical_MPa",
+    "shear_stress_xy_MPa",
+    "equivalent_elastic_strain",
+    "maximum_principal_tensile_stress_MPa",
+    "minimum_principal_compressive_stress_MPa"
+  ],
+  "formulation_limitations": "Not a full SHELL181 solution. Only in-plane Ux/Uy membrane response is represented; shell rotations, bending, transverse shear and through-thickness stress are not solved."
+}

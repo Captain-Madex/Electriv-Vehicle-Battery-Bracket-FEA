@@ -1,0 +1,169 @@
+{
+  "mesh_file": "EV_Bracket_MESH_2.CDB",
+  "result_folder": "Mesh_2",
+  "model": "2-D Q4 plane-stress membrane approximation using SHELL181 in-plane connectivity",
+  "nodes": 2513,
+  "valid_q4_elements": 2233,
+  "degenerate_elements_excluded": 10,
+  "excluded_element_ids": [
+    133,
+    134,
+    1064,
+    1065,
+    1066,
+    1067,
+    1068,
+    1069,
+    1070,
+    1071
+  ],
+  "geometry_bounds_mm": {
+    "x": [
+      -15.0,
+      110.0
+    ],
+    "y": [
+      -20.0,
+      120.0
+    ]
+  },
+  "materials": {
+    "1": {
+      "material": "Steel clamp plate",
+      "elements": 132,
+      "E_MPa": 200000.0,
+      "nu": 0.3,
+      "section_ids": [
+        1
+      ]
+    },
+    "2": {
+      "material": "Aluminium bracket/gusset",
+      "elements": 1172,
+      "E_MPa": 70000.0,
+      "nu": 0.33,
+      "section_ids": [
+        2
+      ]
+    },
+    "3": {
+      "material": "Steel wall",
+      "elements": 929,
+      "E_MPa": 200000.0,
+      "nu": 0.3,
+      "section_ids": [
+        3
+      ]
+    }
+  },
+  "section_thickness_mm": {
+    "1": 80.0,
+    "2": 80.0,
+    "3": 80.0
+  },
+  "load": {
+    "segment_count": 33,
+    "external_edge_count": 574,
+    "loaded_edge_length_mm": 50.0,
+    "line_load_N_per_mm": 5.886,
+    "resultant_x_N": 0.0,
+    "resultant_y_N": -294.3,
+    "total_force_N": 294.3
+  },
+  "supports": {
+    "left_fixed_nodes": 94,
+    "bottom_fixed_nodes": 74,
+    "unique_fixed_nodes": 168,
+    "fixed_dofs": 336,
+    "condition": "Ux=Uy=0 on LEFT_FIXED and BOTTOM_FIXED"
+  },
+  "results": {
+    "total_deformation_mm": {
+      "minimum": 0.0,
+      "maximum": 9.652908819119538e-06,
+      "maximum_absolute": 9.652908819119538e-06
+    },
+    "overall_displacement_mm": {
+      "minimum": 0.0,
+      "maximum": 9.652908819119538e-06,
+      "maximum_absolute": 9.652908819119538e-06
+    },
+    "directional_deformation_x_mm": {
+      "minimum": -1.4906689255654873e-06,
+      "maximum": 2.3542403495244853e-06,
+      "maximum_absolute": 2.3542403495244853e-06
+    },
+    "horizontal_displacement_mm": {
+      "minimum": -1.4906689255654873e-06,
+      "maximum": 2.3542403495244853e-06,
+      "maximum_absolute": 2.3542403495244853e-06
+    },
+    "directional_deformation_y_mm": {
+      "minimum": -9.644532618787158e-06,
+      "maximum": 5.406971350553095e-08,
+      "maximum_absolute": 9.644532618787158e-06
+    },
+    "vertical_displacement_mm": {
+      "minimum": -9.644532618787158e-06,
+      "maximum": 5.406971350553095e-08,
+      "maximum_absolute": 9.644532618787158e-06
+    },
+    "equivalent_stress_von_mises_MPa": {
+      "minimum": 0.0,
+      "maximum": 0.14602424553149915,
+      "maximum_absolute": 0.14602424553149915
+    },
+    "normal_stress_x_longitudinal_MPa": {
+      "minimum": -0.027852451209862586,
+      "maximum": 0.0014746997938552622,
+      "maximum_absolute": 0.027852451209862586
+    },
+    "normal_stress_y_vertical_MPa": {
+      "minimum": -0.10890301767594594,
+      "maximum": 0.0011537395567799416,
+      "maximum_absolute": 0.10890301767594594
+    },
+    "shear_stress_xy_MPa": {
+      "minimum": -0.0290247869780668,
+      "maximum": 0.0233417657115322,
+      "maximum_absolute": 0.0290247869780668
+    },
+    "equivalent_elastic_strain": {
+      "minimum": 0.0,
+      "maximum": 8.356523299832677e-07,
+      "maximum_absolute": 8.356523299832677e-07
+    },
+    "maximum_principal_tensile_stress_MPa": {
+      "minimum": -0.023648855534281314,
+      "maximum": 0.002608007271573993,
+      "maximum_absolute": 0.023648855534281314
+    },
+    "minimum_principal_compressive_stress_MPa": {
+      "minimum": -0.11822486916738371,
+      "maximum": 0.0,
+      "maximum_absolute": 0.11822486916738371
+    }
+  },
+  "bonded_interfaces": {
+    "wall_bracket_slave_nodes": 68,
+    "bracket_clamp_slave_nodes": 34,
+    "tie_equations": 204,
+    "interfaces": [
+      "MAT3 wall to MAT2 bracket at x=0",
+      "MAT2 bracket to MAT1 clamp at y=8 mm"
+    ]
+  },
+  "equilibrium": {
+    "reaction_x_N": -1.4999113062685865e-13,
+    "reaction_y_N": 294.3000000000008,
+    "force_balance_x_N": -1.4999113062685865e-13,
+    "force_balance_y_N": 7.958078640513122e-13
+  },
+  "definitions": {
+    "principal_stresses": "In-plane principal stresses from the 2D stress tensor.",
+    "equivalent_elastic_strain": "3D von-Mises equivalent strain using plane-stress epsilon_z inferred from isotropic elasticity.",
+    "stress_sampling": "Element-average of 2x2 Gauss-point stress/strain; von Mises is maximum across the four Gauss points.",
+    "displacement_sampling": "Nodal values; plots show element-average values."
+  },
+  "limitations": "Not a full SHELL181 solution. Only in-plane Ux/Uy membrane response is represented; shell rotations, bending, transverse shear and through-thickness stress are not solved."
+}

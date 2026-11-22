@@ -1,0 +1,327 @@
+{
+  "mesh_file": "EV_Bracket_MESH_5.CDB",
+  "result_folder": "Mesh_5",
+  "model": "2-D Q4 plane-stress membrane approximation using SHELL181 in-plane connectivity",
+  "nodes": 81984,
+  "valid_q4_elements": 80265,
+  "degenerate_elements_excluded": 168,
+  "excluded_element_ids": [
+    1,
+    2,
+    3,
+    4,
+    5,
+    6,
+    7,
+    8,
+    4784,
+    4785,
+    4786,
+    4787,
+    4788,
+    4789,
+    4790,
+    4791,
+    4792,
+    4793,
+    4794,
+    4795,
+    4796,
+    4797,
+    4798,
+    4799,
+    4800,
+    4801,
+    4802,
+    4803,
+    4804,
+    4805,
+    4806,
+    4807,
+    4808,
+    4809,
+    4810,
+    4811,
+    4812,
+    4813,
+    4814,
+    4815,
+    4816,
+    4817,
+    4818,
+    4819,
+    4820,
+    4821,
+    4822,
+    4823,
+    4824,
+    4825,
+    4826,
+    4827,
+    4828,
+    4829,
+    4830,
+    4831,
+    4832,
+    4833,
+    4834,
+    4835,
+    4836,
+    4837,
+    4838,
+    4839,
+    4840,
+    4841,
+    4842,
+    4843,
+    4844,
+    4845,
+    4846,
+    4847,
+    4848,
+    4849,
+    4850,
+    4851,
+    4852,
+    4853,
+    4854,
+    4855,
+    4856,
+    4857,
+    4858,
+    4859,
+    4860,
+    4861,
+    4862,
+    4863,
+    4864,
+    4865,
+    4866,
+    4867,
+    38642,
+    38643,
+    38644,
+    38645,
+    38646,
+    38647,
+    38648,
+    38649,
+    38650,
+    38651,
+    38652,
+    38653,
+    38654,
+    38655,
+    38656,
+    38657,
+    38658,
+    38659,
+    38660,
+    38661,
+    38662,
+    38663,
+    38664,
+    38665,
+    38666,
+    38667,
+    38668,
+    38669,
+    38670,
+    38671,
+    38672,
+    38673,
+    38674,
+    38675,
+    38676,
+    38677,
+    38678,
+    38679,
+    38680,
+    38681,
+    38682,
+    38683,
+    38684,
+    38685,
+    38686,
+    38687,
+    38688,
+    38689,
+    38690,
+    38691,
+    38692,
+    38693,
+    38694,
+    38695,
+    38696,
+    38697,
+    38698,
+    38699,
+    38700,
+    38701,
+    38702,
+    38703,
+    38704,
+    38705,
+    38706,
+    38707,
+    38708,
+    38709,
+    38710,
+    38711,
+    38712,
+    38713,
+    38714,
+    38715,
+    38716,
+    38717
+  ],
+  "geometry_bounds_mm": {
+    "x": [
+      -15.0,
+      110.0
+    ],
+    "y": [
+      -20.0,
+      120.0
+    ]
+  },
+  "materials": {
+    "1": {
+      "material": "Steel clamp plate",
+      "elements": 4775,
+      "E_MPa": 200000.0,
+      "nu": 0.3,
+      "section_ids": [
+        1
+      ]
+    },
+    "2": {
+      "material": "Aluminium bracket/gusset",
+      "elements": 41716,
+      "E_MPa": 70000.0,
+      "nu": 0.33,
+      "section_ids": [
+        2
+      ]
+    },
+    "3": {
+      "material": "Steel wall",
+      "elements": 33774,
+      "E_MPa": 200000.0,
+      "nu": 0.3,
+      "section_ids": [
+        3
+      ]
+    }
+  },
+  "section_thickness_mm": {
+    "1": 80.0,
+    "2": 80.0,
+    "3": 80.0
+  },
+  "load": {
+    "segment_count": 198,
+    "external_edge_count": 3768,
+    "loaded_edge_length_mm": 50.0,
+    "line_load_N_per_mm": 5.886,
+    "resultant_x_N": 0.0,
+    "resultant_y_N": -294.3,
+    "total_force_N": 294.3
+  },
+  "supports": {
+    "left_fixed_nodes": 561,
+    "bottom_fixed_nodes": 441,
+    "unique_fixed_nodes": 1002,
+    "fixed_dofs": 2004,
+    "condition": "Ux=Uy=0 on LEFT_FIXED and BOTTOM_FIXED"
+  },
+  "results": {
+    "total_deformation_mm": {
+      "minimum": 0.0,
+      "maximum": 9.640479519153025e-06,
+      "maximum_absolute": 9.640479519153025e-06
+    },
+    "overall_displacement_mm": {
+      "minimum": 0.0,
+      "maximum": 9.640479519153025e-06,
+      "maximum_absolute": 9.640479519153025e-06
+    },
+    "directional_deformation_x_mm": {
+      "minimum": -1.4890139321814863e-06,
+      "maximum": 2.268770292042764e-06,
+      "maximum_absolute": 2.268770292042764e-06
+    },
+    "horizontal_displacement_mm": {
+      "minimum": -1.4890139321814863e-06,
+      "maximum": 2.268770292042764e-06,
+      "maximum_absolute": 2.268770292042764e-06
+    },
+    "directional_deformation_y_mm": {
+      "minimum": -9.629534549438983e-06,
+      "maximum": 4.8780070689235646e-08,
+      "maximum_absolute": 9.629534549438983e-06
+    },
+    "vertical_displacement_mm": {
+      "minimum": -9.629534549438983e-06,
+      "maximum": 4.8780070689235646e-08,
+      "maximum_absolute": 9.629534549438983e-06
+    },
+    "equivalent_stress_von_mises_MPa": {
+      "minimum": 0.0,
+      "maximum": 0.27908043632696855,
+      "maximum_absolute": 0.27908043632696855
+    },
+    "normal_stress_x_longitudinal_MPa": {
+      "minimum": -0.10353477595570766,
+      "maximum": 0.008023726744523835,
+      "maximum_absolute": 0.10353477595570766
+    },
+    "normal_stress_y_vertical_MPa": {
+      "minimum": -0.1951859438095736,
+      "maximum": 0.005811422836072801,
+      "maximum_absolute": 0.1951859438095736
+    },
+    "shear_stress_xy_MPa": {
+      "minimum": -0.06967130671775819,
+      "maximum": 0.06208744086483558,
+      "maximum_absolute": 0.06967130671775819
+    },
+    "equivalent_elastic_strain": {
+      "minimum": 0.0,
+      "maximum": 1.9568716433406296e-06,
+      "maximum_absolute": 1.9568716433406296e-06
+    },
+    "maximum_principal_tensile_stress_MPa": {
+      "minimum": -0.04788548477506892,
+      "maximum": 0.008024184088171508,
+      "maximum_absolute": 0.04788548477506892
+    },
+    "minimum_principal_compressive_stress_MPa": {
+      "minimum": -0.22359849400634935,
+      "maximum": 1.5770984323484137e-05,
+      "maximum_absolute": 0.22359849400634935
+    }
+  },
+  "bonded_interfaces": {
+    "wall_bracket_slave_nodes": 401,
+    "bracket_clamp_slave_nodes": 201,
+    "tie_equations": 1204,
+    "interfaces": [
+      "MAT3 wall to MAT2 bracket at x=0",
+      "MAT2 bracket to MAT1 clamp at y=8 mm"
+    ]
+  },
+  "equilibrium": {
+    "reaction_x_N": 2.0799537046924227e-13,
+    "reaction_y_N": 294.2999999999962,
+    "force_balance_x_N": 2.0799537046924227e-13,
+    "force_balance_y_N": -3.808509063674137e-12
+  },
+  "definitions": {
+    "principal_stresses": "In-plane principal stresses from the 2D stress tensor.",
+    "equivalent_elastic_strain": "3D von-Mises equivalent strain using plane-stress epsilon_z inferred from isotropic elasticity.",
+    "stress_sampling": "Element-average of 2x2 Gauss-point stress/strain; von Mises is maximum across the four Gauss points.",
+    "displacement_sampling": "Nodal values; plots show element-average values."
+  },
+  "limitations": "Not a full SHELL181 solution. Only in-plane Ux/Uy membrane response is represented; shell rotations, bending, transverse shear and through-thickness stress are not solved."
+}
